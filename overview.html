@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="AdsForecast Overview — profit-first performance summary for Meta Ads and commerce teams.">
+  <meta name="theme-color" content="#08070d">
+  <meta name="adsforecast-api-base" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-url" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-anon-key" content="sb_publishable__01tCxPjMTliQTxOHRdgyQ_DAPLrAJh">
+  <title>Overview — AdsForecast</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="product.css?v=7">
+</head>
+<body class="dashboard app-page app-page--overview">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar" aria-label="Main navigation">
+      <div class="dashboard-sidebar__header">
+        <a class="dashboard-logo dashboard-logo--premium" href="overview.html" aria-label="Go to AdsForecast overview">
+          <span class="dashboard-logo__mark">AF</span>
+          <span class="dashboard-logo__text">AdsForecast</span>
+        </a>
+        <p class="dashboard-sidebar__caption">Profit intelligence</p>
+      </div>
+      <nav class="dashboard-sidebar__nav" aria-label="Product">
+        <ul class="dashboard-nav">
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="overview" href="overview.html">Overview</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="campaigns" href="campaigns.html">Campaigns</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="profitability" href="profitability.html">Profitability</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="integrations" href="integrations.html">Integrations</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="insights" href="insights.html">AI Analyst</a></li>
+          <li class="dashboard-nav__item dashboard-nav__item--footer"><a class="dashboard-nav__link" data-app-nav="settings" href="settings.html">Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="dashboard-topbar app-topbar">
+        <div class="dashboard-topbar__titles">
+          <div class="dashboard-topbar__title-row">
+            <p class="app-eyebrow">Executive dashboard</p>
+            <span class="dashboard-env-badge" id="dashboard-env-badge" hidden></span>
+          </div>
+          <h1 class="dashboard-topbar__title">Overview</h1>
+          <p class="dashboard-topbar__subtitle" id="overview-live-msg">Loading performance context…</p>
+        </div>
+        <div class="dashboard-topbar__actions">
+          <a class="btn btn--ghost" href="integrations.html">Connect sources</a>
+          <button class="btn btn--secondary" type="button" data-refresh-page>Refresh</button>
+          <button class="dashboard-sign-out" type="button" id="dashboard-sign-out">Sign out</button>
+          <a class="dashboard-user" id="dashboard-profile-link" href="profile.html" aria-label="Open profile">
+            <span class="dashboard-user__avatar" aria-hidden="true"></span>
+            <span class="dashboard-user__name dashboard-user__name-link">Profile</span>
+          </a>
+        </div>
+      </header>
+
+      <main class="dashboard-content app-content" id="main-content" tabindex="-1">
+        <section class="app-hero-card" aria-labelledby="overview-heading">
+          <div class="app-hero-card__content">
+            <p class="app-eyebrow">Profit command center</p>
+            <h2 class="app-hero-card__title" id="overview-heading">Run paid growth from one clear operating picture.</h2>
+            <p class="app-hero-card__text">See where money is moving, which campaigns protect contribution, and what deserves action before the next budget cycle.</p>
+            <div class="app-hero-card__actions">
+              <a class="btn btn--primary" href="campaigns.html">Review campaigns</a>
+              <a class="btn btn--ghost" href="profitability.html">See profitability</a>
+            </div>
+          </div>
+          <div class="app-hero-card__visual" aria-hidden="true">
+            <div class="app-orbit app-orbit--one"></div>
+            <div class="app-orbit app-orbit--two"></div>
+            <div class="app-mini-terminal">
+              <span>ROAS</span>
+              <strong>3.24</strong>
+              <em>decision signal</em>
+            </div>
+          </div>
+        </section>
+
+        <section class="app-kpi-grid" id="overview-kpis" aria-label="Overview KPI cards"></section>
+
+        <section class="overview-command-grid" id="overview-command-grid" aria-label="Performance operating brief">
+          <article class="dashboard-section"><p class="dashboard-empty">Building decision queue…</p></article>
+          <article class="dashboard-section"><p class="dashboard-empty">Calculating spend allocation…</p></article>
+          <article class="dashboard-section"><p class="dashboard-empty">Checking data quality…</p></article>
+        </section>
+
+        <section class="app-two-col app-two-col--balanced" id="overview-topworst" aria-label="Top and worst campaign summary"></section>
+
+        <section class="dashboard-section app-panel app-panel--chart">
+          <div class="dashboard-section__header app-panel__header">
+            <div>
+              <p class="app-eyebrow">Trend</p>
+              <h2 class="dashboard-section__title">Spend and purchase-value trend</h2>
+              <p class="dashboard-section__description">A shared time scale for the two inputs that determine blended ROAS.</p>
+            </div>
+            <span class="app-chip">Rolling window</span>
+          </div>
+          <div class="performance-chart__inner" id="overview-chart"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="ui.js?v=7" defer></script>
+  <script type="module" src="overview.js?v=10"></script>
+</body>
+</html>

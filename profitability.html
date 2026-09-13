@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="AdsForecast Profitability — estimated profit, margin, and budget waste analysis.">
+  <meta name="theme-color" content="#08070d">
+  <meta name="adsforecast-api-base" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <title>Profitability — AdsForecast</title>
+  <meta name="adsforecast-supabase-url" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-anon-key" content="sb_publishable__01tCxPjMTliQTxOHRdgyQ_DAPLrAJh">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="product.css?v=7">
+</head>
+<body class="dashboard app-page app-page--profitability">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar" aria-label="Main navigation">
+      <div class="dashboard-sidebar__header">
+        <a class="dashboard-logo app-logo" href="overview.html" aria-label="Go to AdsForecast overview"><span class="app-logo__mark">AF</span><span>AdsForecast</span></a>
+      </div>
+      <nav class="dashboard-sidebar__nav" aria-label="Product">
+        <ul class="dashboard-nav">
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="overview" href="overview.html">Overview</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="campaigns" href="campaigns.html">Campaigns</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="profitability" href="profitability.html">Profitability</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="integrations" href="integrations.html">Integrations</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="insights" href="insights.html">AI Analyst</a></li>
+          <li class="dashboard-nav__item dashboard-nav__item--footer"><a class="dashboard-nav__link" data-app-nav="settings" href="settings.html">Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="dashboard-topbar">
+        <div class="dashboard-topbar__titles">
+          <div class="dashboard-topbar__title-row">
+            <h1 class="dashboard-topbar__title">Profitability</h1>
+            <span class="dashboard-env-badge" id="dashboard-env-badge"></span>
+          </div>
+          <p class="dashboard-topbar__subtitle" id="profitability-live-msg">Loading profit model…</p>
+        </div>
+        <div class="dashboard-topbar__actions">
+          <button class="btn btn--ghost" type="button" id="profitability-refresh-btn">Refresh</button>
+          <button class="dashboard-sign-out" type="button" id="dashboard-sign-out">Sign out</button>
+          <div class="dashboard-user">
+            <span class="dashboard-user__avatar" aria-hidden="true"></span>
+            <a id="dashboard-profile-link" class="dashboard-user__name dashboard-user__name-link" href="profile.html">Profile</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-content" id="main-content" tabindex="-1">
+        <section class="profit-hero app-hero-card">
+          <div class="app-hero-card__copy">
+            <span class="app-hero-eyebrow">Profit cockpit</span>
+            <h2 class="app-hero-title">Know which campaigns actually make money.</h2>
+            <p class="app-hero-text">ROAS can look good while margin gets crushed. This view separates profitable budget from waste using your current estimated profit model.</p>
+            <div class="profit-formula-card" aria-label="Estimated profit formula">
+              <span>Estimated profit</span>
+              <strong id="profit-formula-copy">Purchase value × 35% − ad spend</strong>
+              <small>Transparent browser-side model until store COGS, refunds, and shipping are connected.</small>
+            </div>
+          </div>
+          <div class="profit-visual" aria-hidden="true">
+            <div class="profit-orb profit-orb--positive"><span>Profit</span><strong id="profit-visual-profit">—</strong></div>
+            <div class="profit-orb profit-orb--margin"><span>Margin</span><strong id="profit-visual-margin">—</strong></div>
+            <div class="profit-stack-card profit-stack-card--top"><small>Scale</small><b id="profit-visual-winners">—</b></div>
+            <div class="profit-stack-card profit-stack-card--risk"><small>Repair</small><b id="profit-visual-losers">—</b></div>
+          </div>
+        </section>
+
+        <section class="app-kpi-grid app-kpi-grid--profit" id="profit-kpis" aria-label="Profit KPIs"></section>
+
+        <section class="profit-model-layout">
+          <article class="dashboard-section profit-model-panel">
+            <div class="dashboard-section__header profit-model-panel__head">
+              <div><span class="app-section-kicker">Cost model</span><h2 class="dashboard-section__title">Make the estimate match your economics</h2><p class="dashboard-section__description">Adjust the share of purchase value consumed by product cost, fulfilment, and payment fees. Changes stay in this browser.</p></div>
+              <span class="app-chip" id="profit-model-total">65% variable cost</span>
+            </div>
+            <form class="profit-model-form" id="profit-model-form">
+              <label><span>COGS</span><span class="profit-model-input"><input id="profit-model-cogs" type="number" inputmode="decimal" min="0" max="95" step="0.5" required><b>%</b></span></label>
+              <label><span>Fulfilment</span><span class="profit-model-input"><input id="profit-model-fulfillment" type="number" inputmode="decimal" min="0" max="95" step="0.5" required><b>%</b></span></label>
+              <label><span>Payment fees</span><span class="profit-model-input"><input id="profit-model-fees" type="number" inputmode="decimal" min="0" max="95" step="0.5" required><b>%</b></span></label>
+              <div class="profit-model-form__actions"><button class="btn btn--primary" type="submit">Apply model</button><button class="btn btn--ghost" id="profit-model-reset" type="button">Reset</button></div>
+            </form>
+            <p class="account-feedback" id="profit-model-feedback" role="status" aria-live="polite"></p>
+          </article>
+          <article class="dashboard-section profit-waterfall-panel">
+            <div class="dashboard-section__header"><span class="app-section-kicker">Contribution bridge</span><h2 class="dashboard-section__title">From purchase value to estimated profit</h2><p class="dashboard-section__description">The exact values currently used by every profitability card below.</p></div>
+            <div class="profit-waterfall" id="profit-waterfall"></div>
+          </article>
+        </section>
+
+        <section class="profit-split-grid">
+          <article class="dashboard-section profit-panel profit-panel--risk">
+            <div class="dashboard-section__header">
+              <span class="app-section-kicker">Leakage</span>
+              <h3 class="dashboard-section__title">Losing campaigns</h3>
+              <p class="dashboard-section__description">Campaigns currently dragging down estimated profit.</p>
+            </div>
+            <ul class="profit-list" id="profit-losing-list"></ul>
+          </article>
+
+          <article class="dashboard-section profit-panel profit-panel--win">
+            <div class="dashboard-section__header">
+              <span class="app-section-kicker">Winners</span>
+              <h3 class="dashboard-section__title">Profitable campaigns</h3>
+              <p class="dashboard-section__description">Campaigns with positive estimated contribution.</p>
+            </div>
+            <ul class="profit-list" id="profit-winning-list"></ul>
+          </article>
+        </section>
+
+        <section class="profit-analysis-grid">
+          <article class="dashboard-section profit-driver-card">
+            <div>
+              <span class="app-section-kicker">Top driver</span>
+              <h3 class="dashboard-section__title" id="profit-top-title">Loading…</h3>
+              <p class="dashboard-section__description" id="profit-top-copy">Finding your strongest profit source.</p>
+            </div>
+          </article>
+          <article class="dashboard-section profit-driver-card profit-driver-card--warning">
+            <div>
+              <span class="app-section-kicker">Budget risk</span>
+              <h3 class="dashboard-section__title" id="profit-risk-title">Loading…</h3>
+              <p class="dashboard-section__description" id="profit-risk-copy">Finding the biggest negative contribution.</p>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="ui.js?v=7" defer></script>
+  <script type="module" src="profitability.js?v=10"></script>
+</body>
+</html>

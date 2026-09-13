@@ -1,11 +1,19 @@
 # Changelog
 
+## 0.11.0 — 2026-08-31
+
+- Split the public marketing experience into focused `Product`, `How it works`, `Pricing`, and `FAQ` pages.
+- Reduced the public homepage to four concise decision blocks; the 320 px layout is less than half the previous page height.
+- Added a lightweight desktop-only depth treatment with static mobile and reduced-motion fallbacks.
+- Added accessible mobile navigation, active-page states, responsive pricing comparison, and working monthly/annual plan controls.
+- Added public-route browser coverage, semantic accessibility checks, a sitemap, and expanded visual audit coverage.
+
 ## 0.2.0 — 2026-04-20
 
 - **Backend foundation:** PostgreSQL via Prisma (`User`, `Workspace`, `WorkspaceMember`, `Connection`, `SyncJob`), modular `app.js`, routes, controllers, services
 - **Auth:** `POST /v1/auth/signup`, `POST /v1/auth/login`, `GET /v1/auth/me` (bcrypt + JWT); `GET /v1/workspaces/:id/dashboard` requires Bearer token + membership (demo metrics + insights merged with DB workspace)
 - **Seed:** `npm run db:seed` for demo user/workspace
-- **Frontend:** when `adprofit.apiBase` is set, login/signup call the API and store JWT + workspace id; dashboard sends `Authorization`; 401 redirects to login
+- **Frontend:** when `adsforecast.apiBase` is set, login/signup call the API and store JWT + workspace id; dashboard sends `Authorization`; 401 redirects to login
 - **Docs:** `docs/backend-setup.md`, README backend section; Dockerfile runs `prisma generate`
 
 ## 0.1.3 — 2026-04-20

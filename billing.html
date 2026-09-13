@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="AdsForecast plans and billing — compare monthly and annual workspace plans.">
+  <meta name="theme-color" content="#08070d">
+  <meta name="adsforecast-api-base" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-url" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-anon-key" content="sb_publishable__01tCxPjMTliQTxOHRdgyQ_DAPLrAJh">
+  <title>Plans &amp; billing — AdsForecast</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="product.css?v=7">
+  <link rel="stylesheet" href="launch.css?v=1">
+</head>
+<body class="dashboard app-page billing-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar" aria-label="Main navigation">
+      <div class="dashboard-sidebar__header"><a class="dashboard-logo app-logo-premium" href="overview.html" aria-label="Go to AdsForecast overview"><span class="app-logo-premium__mark" aria-hidden="true">AF</span><span>AdsForecast</span></a></div>
+      <nav class="dashboard-sidebar__nav" aria-label="Product"><ul class="dashboard-nav"><li><a data-app-nav="billing" href="billing.html">Plans &amp; billing</a></li></ul></nav>
+    </aside>
+    <div class="dashboard-main">
+      <header class="dashboard-topbar">
+        <div class="dashboard-topbar__titles"><div class="dashboard-topbar__title-row"><h1 class="dashboard-topbar__title">Plans &amp; billing</h1><span class="dashboard-env-badge" id="dashboard-env-badge"></span></div><p class="dashboard-topbar__subtitle">Choose a plan and billing cadence for your workspace.</p></div>
+        <div class="dashboard-topbar__actions"><a class="btn btn--ghost" href="settings.html#billing">Billing settings</a><div class="dashboard-user"><span class="dashboard-user__avatar" aria-hidden="true"></span><a id="dashboard-profile-link" class="dashboard-user__name" href="profile.html">Profile</a></div></div>
+      </header>
+
+      <main class="dashboard-content billing-content" id="main-content" tabindex="-1">
+        <section class="billing-hero app-hero-card" aria-labelledby="billing-heading">
+          <div class="app-hero-card__copy"><span class="app-hero-eyebrow">Workspace subscription</span><h2 class="app-hero-title" id="billing-heading">Pricing that grows with the complexity of your ad operation.</h2><p class="app-hero-text">Start with one Meta account, add deeper decision tools as the team grows, and switch between monthly flexibility or annual savings.</p><div class="billing-trust-row"><span>Cancel plan changes anytime</span><span>Annual savings shown upfront</span><span>No charge without secure checkout</span></div></div>
+        </section>
+
+        <section class="billing-status-strip" aria-label="Billing status">
+          <div><span>Subscription status</span><strong id="billing-current-status">No paid plan active</strong></div>
+          <div><span>Checkout preference</span><strong id="billing-checkout-draft">Not selected</strong></div>
+          <div><span>Payment system</span><strong id="billing-provider-status">Checking Stripe readiness</strong></div>
+        </section>
+
+        <section class="billing-pricing-section" aria-labelledby="plan-options-title">
+          <div class="billing-pricing-head"><div><span class="app-section-kicker">Plan options</span><h2 id="plan-options-title">Choose the right operating depth</h2><p>All prices are in USD. Annual plans are billed once per year.</p></div><div class="billing-toggle" role="group" aria-label="Billing cadence"><button type="button" data-billing-cadence="monthly" aria-pressed="true">Monthly</button><button type="button" data-billing-cadence="annual" aria-pressed="false">Annual <span>Save up to 24%</span></button></div></div>
+          <div class="billing-plan-grid" id="billing-plan-grid"></div>
+        </section>
+
+        <section class="dashboard-section billing-comparison">
+          <div class="dashboard-section__header"><span class="app-section-kicker">Plan comparison</span><h2 class="dashboard-section__title">Compare the limits that matter</h2><p class="dashboard-section__description">A compact side-by-side view of workspace capacity and decision tools.</p></div>
+          <div class="table-wrap billing-comparison__wrap"><table><thead id="billing-comparison-head"></thead><tbody id="billing-comparison-body"></tbody></table></div>
+        </section>
+
+        <section class="billing-readiness-grid">
+          <article class="dashboard-section"><span class="app-section-kicker">How activation works</span><ol class="billing-steps"><li class="billing-step--active"><span>1</span><div><strong>Choose plan and cadence</strong><p>Save a checkout preference for this workspace.</p></div></li><li><span>2</span><div><strong>Complete secure Stripe checkout</strong><p>This step becomes available after Stripe price IDs are configured.</p></div></li><li><span>3</span><div><strong>Workspace activates</strong><p>Plan status changes only after a verified payment event.</p></div></li></ol></article>
+          <article class="dashboard-section billing-honesty-card"><span class="app-section-kicker">Billing integrity</span><h2 class="dashboard-section__title">Verified status only</h2><p class="dashboard-section__description">A plan is marked active only after a signed Stripe event confirms the subscription. Plan selection and checkout drafts are kept separate from paid access.</p><button class="btn btn--ghost" id="billing-manage-portal" type="button" disabled>Manage billing in Stripe</button></article>
+        </section>
+
+        <section class="dashboard-section billing-faq"><div class="dashboard-section__header"><span class="app-section-kicker">Billing questions</span><h2 class="dashboard-section__title">Before you choose</h2></div><div class="billing-faq__grid"><details><summary>What changes on annual billing?</summary><p>You pay once for the year and receive the lower effective monthly price shown on each plan.</p></details><details><summary>Will saving a plan charge me?</summary><p>No. Saving a selection creates a server-side checkout draft. A charge can only occur inside secure Stripe checkout when it is configured and you confirm payment there.</p></details><details><summary>How is plan activation verified?</summary><p>Subscription state changes only after AdsForecast verifies a signed Stripe webhook event.</p></details><details><summary>Is my Meta connection affected?</summary><p>No. Selecting or changing a billing plan does not disconnect Meta or alter campaign data.</p></details></div></section>
+
+        <p class="launch-feedback" id="billing-feedback" role="status" aria-live="polite"></p>
+        <dialog class="app-dialog billing-dialog" id="billing-dialog" aria-labelledby="billing-dialog-title"><div class="app-dialog__head"><div><span class="app-section-kicker">Checkout review</span><h2 id="billing-dialog-title">Review plan</h2></div><button class="app-dialog__close" type="button" data-billing-dialog-close aria-label="Close plan dialog">×</button></div><div id="billing-dialog-content"></div><div class="billing-dialog__actions"><button class="btn btn--primary" id="billing-checkout" type="button" hidden>Continue to secure checkout</button><button class="btn btn--ghost" id="billing-save-draft" type="button">Save selection</button><button class="btn btn--ghost" type="button" data-billing-dialog-close>Cancel</button></div></dialog>
+      </main>
+    </div>
+  </div>
+  <script src="ui.js?v=7" defer></script>
+  <script type="module" src="billing.js?v=4"></script>
+</body>
+</html>

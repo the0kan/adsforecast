@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="AdsForecast platform administration and launch operations."><meta name="theme-color" content="#08070d">
+  <meta name="adsforecast-api-base" content="https://qlwaxfkmeukhhuwwgllk.supabase.co"><meta name="adsforecast-supabase-url" content="https://qlwaxfkmeukhhuwwgllk.supabase.co"><meta name="adsforecast-supabase-anon-key" content="sb_publishable__01tCxPjMTliQTxOHRdgyQ_DAPLrAJh">
+  <title>Control center — AdsForecast</title><link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" /><link rel="stylesheet" href="product.css?v=7"><link rel="stylesheet" href="launch.css?v=1">
+</head>
+<body class="dashboard app-page admin-v2-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar" aria-label="Main navigation"><div class="dashboard-sidebar__header"><a class="dashboard-logo app-logo-premium" href="overview.html" aria-label="Go to AdsForecast overview"><span class="app-logo-premium__mark" aria-hidden="true">AF</span><span>AdsForecast</span></a></div><nav class="dashboard-sidebar__nav" aria-label="Product"></nav></aside>
+    <div class="dashboard-main">
+      <header class="dashboard-topbar"><div class="dashboard-topbar__titles"><div class="dashboard-topbar__title-row"><h1 class="dashboard-topbar__title">Control center</h1><span class="dashboard-env-badge dashboard-env-badge--account" id="dashboard-env-badge">Control plane</span></div><p class="dashboard-topbar__subtitle" id="admin-role-copy">Verifying platform administrator access…</p></div><div class="dashboard-topbar__actions"><button class="btn btn--ghost" id="admin-refresh" type="button">Refresh</button><div class="dashboard-user"><span class="dashboard-user__avatar"></span><a class="dashboard-user__name" id="dashboard-profile-link" href="profile.html">Profile</a></div></div></header>
+      <main class="dashboard-content launch-content" id="main-content" tabindex="-1">
+        <section class="launch-hero admin-v2-hero"><div><span class="app-section-kicker">Platform operations</span><h2>One control plane for launch, customers and revenue operations.</h2><p>Monitor real tenant state, triage customer requests, configure public plans and verify provider readiness without exposing credentials or inventing payment status.</p><div class="launch-hero__actions"><a class="btn btn--primary" href="support.html">Open customer support</a><a class="btn btn--ghost" href="billing.html">Review customer billing</a></div></div><div class="admin-launch-control"><label for="admin-launch-state">Customer access</label><select id="admin-launch-state" class="app-pref-input"><option value="private_beta">Private beta</option><option value="invite_only">Invite only</option><option value="public">Public</option></select><button class="btn btn--ghost" id="admin-save-launch" type="button">Save launch state</button><small>Changing this setting is audited. It does not automatically publish the site.</small></div></section>
+        <p class="launch-feedback" id="admin-feedback" role="status" aria-live="polite"></p>
+        <nav class="admin-view-tabs" aria-label="Admin console views">
+          <button type="button" data-admin-view="overview" aria-pressed="true">Overview</button><button type="button" data-admin-view="customers">Customers</button><button type="button" data-admin-view="workspaces">Workspaces</button><button type="button" data-admin-view="subscriptions">Subscriptions</button><button type="button" data-admin-view="plans">Plans</button><button type="button" data-admin-view="tickets">Support</button><button type="button" data-admin-view="integrations">Integrations</button><button type="button" data-admin-view="system">System</button><button type="button" data-admin-view="admins">Admins</button><button type="button" data-admin-view="audit">Audit log</button>
+        </nav>
+        <section id="admin-view" aria-live="polite"><div class="dashboard-section"><p class="dashboard-empty">Loading control plane…</p></div></section>
+        <dialog class="app-dialog admin-record-dialog" id="admin-record-dialog" aria-labelledby="admin-dialog-title"><div id="admin-dialog-content"></div></dialog>
+      </main>
+    </div>
+  </div>
+  <script src="ui.js?v=7" defer></script><script type="module" src="control-center.js?v=1"></script>
+</body>
+</html>

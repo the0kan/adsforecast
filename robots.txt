@@ -1,2 +1,13 @@
 User-agent: *
 Allow: /
+Sitemap: https://adsforecast.com/sitemap.xml
+Disallow: /control-center.html
+Disallow: /support.html
+Disallow: /profile.html
+Disallow: /settings.html
+Disallow: /billing.html
+Disallow: /overview.html
+Disallow: /campaigns.html
+Disallow: /profitability.html
+Disallow: /insights.html
+Disallow: /integrations.html

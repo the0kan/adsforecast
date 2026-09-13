@@ -1,10 +1,10 @@
 /**
- * AdProfit — mock data layer (client-side)
+ * AdsForecast — mock data layer (client-side)
  * Replace with API responses later; keep shapes stable for dashboard.js + calculators.
  * @module data
  */
 
-export const ADPROFIT_DATA_VERSION = "1.0.0";
+export const ADSFORECAST_DATA_VERSION = "1.0.0";
 
 /** @typedef {'USD'|'EUR'|'GBP'} CurrencyCode */
 
@@ -93,6 +93,12 @@ export const campaigns = [
     estimatedProfit: 22640,
     roas: 96200 / 18400,
     cpa: 18400 / 612,
+    clicks: 19840,
+    impressions: 742100,
+    conversionRate: 612 / 19840,
+    aov: 96200 / 612,
+    trend: "up",
+    recommendation: "Scale carefully; this is the strongest profit driver in the current mix.",
     statusLabel: "Scaling",
     statusTone: "healthy",
   },
@@ -108,6 +114,12 @@ export const campaigns = [
     estimatedProfit: 15210,
     roas: 54880 / 9120,
     cpa: 9120 / 418,
+    clicks: 11240,
+    impressions: 318500,
+    conversionRate: 418 / 11240,
+    aov: 54880 / 418,
+    trend: "up",
+    recommendation: "Protect budget; retargeting is efficient and should stay funded.",
     statusLabel: "Active",
     statusTone: "healthy",
   },
@@ -123,6 +135,12 @@ export const campaigns = [
     estimatedProfit: -2180,
     roas: 38940 / 12050,
     cpa: 12050 / 290,
+    clicks: 16780,
+    impressions: 621000,
+    conversionRate: 290 / 16780,
+    aov: 38940 / 290,
+    trend: "down",
+    recommendation: "Refresh creative and test a cleaner offer before raising budget.",
     statusLabel: "Review",
     statusTone: "risk",
   },
@@ -138,6 +156,12 @@ export const campaigns = [
     estimatedProfit: -4020,
     roas: 17200 / 6780,
     cpa: 6780 / 156,
+    clicks: 9100,
+    impressions: 268400,
+    conversionRate: 156 / 9100,
+    aov: 17200 / 156,
+    trend: "down",
+    recommendation: "Reduce spend until audience quality and offer alignment improve.",
     statusLabel: "Losing",
     statusTone: "risk",
   },
@@ -153,6 +177,12 @@ export const campaigns = [
     estimatedProfit: 1240,
     roas: 7360 / 2570,
     cpa: 2570 / 198,
+    clicks: 6400,
+    impressions: 121500,
+    conversionRate: 198 / 6400,
+    aov: 7360 / 198,
+    trend: "flat",
+    recommendation: "Monitor attribution overlap; ROAS can look better than true margin here.",
     statusLabel: "Watch",
     statusTone: "warn",
   },
@@ -386,7 +416,7 @@ export const profitExplainer = {
  * Document metadata for cache busting / debugging.
  */
 export const meta = {
-  schemaVersion: ADPROFIT_DATA_VERSION,
+  schemaVersion: ADSFORECAST_DATA_VERSION,
   generatedAt: "2026-04-20T12:00:00.000Z",
   environment: "mock",
 };

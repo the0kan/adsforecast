@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="AdsForecast support center — open and manage workspace support requests.">
+  <meta name="theme-color" content="#08070d">
+  <meta name="adsforecast-api-base" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-url" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-anon-key" content="sb_publishable__01tCxPjMTliQTxOHRdgyQ_DAPLrAJh">
+  <title>Support — AdsForecast</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="product.css?v=7">
+  <link rel="stylesheet" href="launch.css?v=1">
+</head>
+<body class="dashboard app-page support-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar" aria-label="Main navigation"><div class="dashboard-sidebar__header"><a class="dashboard-logo app-logo-premium" href="overview.html" aria-label="Go to AdsForecast overview"><span class="app-logo-premium__mark" aria-hidden="true">AF</span><span>AdsForecast</span></a></div><nav class="dashboard-sidebar__nav" aria-label="Product"></nav></aside>
+    <div class="dashboard-main">
+      <header class="dashboard-topbar"><div class="dashboard-topbar__titles"><div class="dashboard-topbar__title-row"><h1 class="dashboard-topbar__title">Support</h1><span class="dashboard-env-badge" id="dashboard-env-badge"></span></div><p class="dashboard-topbar__subtitle">A traceable support channel for product, Meta, billing and account questions.</p></div><div class="dashboard-topbar__actions"><button class="btn btn--primary" id="support-new-ticket" type="button">New ticket</button><div class="dashboard-user"><span class="dashboard-user__avatar"></span><a class="dashboard-user__name" id="dashboard-profile-link" href="profile.html">Profile</a></div></div></header>
+      <main class="dashboard-content launch-content" id="main-content" tabindex="-1">
+        <section class="launch-hero support-hero"><div><span class="app-section-kicker">Customer care workspace</span><h2>Get a clear answer without losing the context.</h2><p>Every request stays attached to your workspace with its category, urgency and complete reply history. Never paste passwords, Meta tokens or API keys into a ticket.</p></div><div class="launch-hero__status"><span>Target first response</span><strong>Within 24 hours</strong><small>Urgent incidents are triaged sooner.</small></div></section>
+        <p class="launch-feedback" id="support-feedback" role="status" aria-live="polite"></p>
+        <section class="support-layout">
+          <aside class="dashboard-section support-queue"><div class="launch-section-head"><div><span class="app-section-kicker">Your requests</span><h2>Ticket queue</h2></div><button class="btn btn--ghost" type="button" id="support-refresh">Refresh</button></div><div class="support-ticket-list" id="support-ticket-list" aria-live="polite"><p class="dashboard-empty">Loading support requests…</p></div></aside>
+          <section class="dashboard-section support-thread" id="support-thread"><div class="support-thread__empty"><span aria-hidden="true">AF</span><h2>Select a ticket</h2><p>Choose an existing request or open a new ticket to contact the AdsForecast team.</p></div></section>
+        </section>
+        <section class="support-guides" aria-label="Support guidance"><article><span>01</span><div><strong>Meta connection issue</strong><p>Include the visible error and account ID suffix, never the access token.</p></div></article><article><span>02</span><div><strong>Billing question</strong><p>Reference the plan and invoice date; never send card details.</p></div></article><article><span>03</span><div><strong>Product bug</strong><p>Describe what you expected, what happened and the browser/device used.</p></div></article></section>
+        <dialog class="app-dialog support-dialog" id="support-dialog" aria-labelledby="support-dialog-title"><form id="support-create-form"><div class="app-dialog__head"><div><span class="app-section-kicker">New support request</span><h2 id="support-dialog-title">Tell us what happened</h2></div><button class="app-dialog__close" type="button" data-support-close aria-label="Close">×</button></div><div class="support-form-grid"><label class="app-pref-field support-form-grid__wide">Subject<input class="app-pref-input" name="subject" maxlength="160" minlength="5" required placeholder="A short, specific summary"></label><label class="app-pref-field">Category<select class="app-pref-input" name="category"><option value="product">Product</option><option value="meta">Meta integration</option><option value="billing">Billing</option><option value="account">Account</option><option value="bug">Bug report</option><option value="feedback">Feedback</option><option value="other">Other</option></select></label><label class="app-pref-field">Priority<select class="app-pref-input" name="priority"><option value="normal">Normal</option><option value="low">Low</option><option value="high">High</option><option value="urgent">Urgent — service blocked</option></select></label><label class="app-pref-field support-form-grid__wide">Message<textarea class="app-pref-input" name="message" rows="7" maxlength="5000" minlength="10" required placeholder="Steps, visible error, expected outcome and business impact"></textarea></label></div><p class="support-security-note">Do not include passwords, payment details, API keys or Meta access tokens.</p><div class="billing-dialog__actions"><button class="btn btn--primary" type="submit">Open ticket</button><button class="btn btn--ghost" type="button" data-support-close>Cancel</button></div></form></dialog>
+      </main>
+    </div>
+  </div>
+  <script src="ui.js?v=7" defer></script>
+  <script type="module" src="support.js?v=1"></script>
+</body>
+</html>

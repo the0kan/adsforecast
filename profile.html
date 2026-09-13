@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="AdsForecast Profile — account and session details.">
+  <meta name="theme-color" content="#08070d">
+  <meta name="adsforecast-api-base" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <title>Profile — AdsForecast</title>
+  <meta name="adsforecast-supabase-url" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-anon-key" content="sb_publishable__01tCxPjMTliQTxOHRdgyQ_DAPLrAJh">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="product.css?v=7">
+  <link rel="stylesheet" href="launch.css?v=1">
+</head>
+<body class="dashboard app-page account-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar" aria-label="Main navigation">
+      <div class="dashboard-sidebar__header"><a class="dashboard-logo app-logo-premium" href="overview.html" aria-label="Go to AdsForecast overview"><span class="app-logo-premium__mark" aria-hidden="true">AF</span><span>AdsForecast</span></a></div>
+      <nav class="dashboard-sidebar__nav" aria-label="Product">
+        <ul class="dashboard-nav">
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="overview" href="overview.html">Overview</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="campaigns" href="campaigns.html">Campaigns</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="profitability" href="profitability.html">Profitability</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="integrations" href="integrations.html">Integrations</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="insights" href="insights.html">AI Analyst</a></li>
+          <li class="dashboard-nav__item dashboard-nav__item--footer"><a class="dashboard-nav__link" data-app-nav="settings" href="settings.html">Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="dashboard-topbar">
+        <div class="dashboard-topbar__titles">
+          <div class="dashboard-topbar__title-row">
+            <h1 class="dashboard-topbar__title">Profile</h1>
+            <span class="dashboard-env-badge" id="dashboard-env-badge"></span>
+          </div>
+          <p class="dashboard-topbar__subtitle">Your account identity, workspace profile and session context.</p>
+        </div>
+        <div class="dashboard-topbar__actions">
+          <a class="btn btn--ghost" href="settings.html">Settings</a>
+          <button class="dashboard-sign-out" type="button" id="dashboard-sign-out">Sign out</button>
+          <div class="dashboard-user"><span class="dashboard-user__avatar" aria-hidden="true"></span><a id="dashboard-profile-link" class="dashboard-user__name dashboard-user__name-link" href="profile.html">Profile</a></div>
+        </div>
+      </header>
+
+      <main class="dashboard-content" id="main-content" tabindex="-1">
+        <section class="profile-hero">
+          <div class="profile-avatar-3d" aria-hidden="true"><span id="profile-hero-initials">AF</span></div>
+          <div class="profile-hero__body">
+            <span class="account-kicker">Account identity</span>
+            <h2 class="profile-hero__title" id="profile-hero-name">Loading profile…</h2>
+            <p class="profile-hero__text" id="profile-hero-email">Checking Supabase session and workspace context.</p>
+          </div>
+          <div class="profile-hero__actions">
+            <a class="integration-card__btn integration-card__btn--primary" href="billing.html">Plans &amp; billing</a>
+            <a class="integration-card__btn" href="settings.html">Workspace settings</a>
+          </div>
+        </section>
+
+        <section class="profile-overview-grid">
+          <article class="account-card app-profile-card profile-edit-card">
+            <div class="account-card__head"><span class="account-card__icon" aria-hidden="true">ID</span><div><h2>Public workspace profile</h2><p>Choose how your identity appears inside AdsForecast.</p></div></div>
+            <form id="profile-edit-form" class="profile-edit-form profile-edit-form--extended">
+              <label class="app-pref-field" for="profile-display-name">Display name<input class="app-pref-input" id="profile-display-name" type="text" maxlength="80" autocomplete="name" required></label>
+              <label class="app-pref-field" for="profile-company-name">Company<input class="app-pref-input" id="profile-company-name" type="text" maxlength="120" autocomplete="organization"></label>
+              <label class="app-pref-field" for="profile-role-title">Role title<input class="app-pref-input" id="profile-role-title" type="text" maxlength="120" autocomplete="organization-title"></label>
+              <label class="app-pref-field" for="profile-phone">Phone<input class="app-pref-input" id="profile-phone" type="tel" maxlength="40" autocomplete="tel"></label>
+              <label class="app-pref-field" for="profile-locale">Language &amp; locale<select class="app-pref-input" id="profile-locale"><option value="en-US">English · United States</option><option value="en-GB">English · United Kingdom</option><option value="tr-TR">Türkçe</option><option value="pl-PL">Polski</option><option value="de-DE">Deutsch</option></select></label>
+              <div class="profile-readonly-field"><span>Email address</span><strong id="profile-email-readonly">Loading…</strong><small>Managed by your authentication provider.</small></div>
+              <div class="account-card__actions account-card__actions--footer"><button class="integration-card__btn integration-card__btn--primary" type="submit">Save profile</button><p class="account-feedback" id="profile-save-feedback" aria-live="polite"></p></div>
+            </form>
+          </article>
+
+          <article class="account-card app-profile-card profile-plan-card" id="profile-plan-card">
+            <div class="skeleton-line"></div><div class="skeleton-line skeleton-line--wide"></div>
+          </article>
+
+          <article class="account-card app-profile-card" id="profile-workspace-card">
+            <div class="skeleton-line"></div><div class="skeleton-line skeleton-line--wide"></div>
+          </article>
+
+          <article class="account-card app-profile-card" id="profile-data-card">
+            <div class="skeleton-line"></div><div class="skeleton-line skeleton-line--wide"></div>
+          </article>
+
+          <article class="account-card app-profile-card profile-security-card" id="profile-security-card">
+            <div class="skeleton-line"></div><div class="skeleton-line skeleton-line--wide"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="ui.js?v=7" defer></script>
+  <script type="module" src="profile.js?v=8"></script>
+</body>
+</html>

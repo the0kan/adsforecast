@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="AdsForecast Campaigns — premium campaign performance command center.">
+  <meta name="theme-color" content="#08070d">
+  <meta name="adsforecast-api-base" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-url" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-anon-key" content="sb_publishable__01tCxPjMTliQTxOHRdgyQ_DAPLrAJh">
+  <title>Campaigns — AdsForecast</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="product.css?v=7">
+  <link rel="stylesheet" href="launch.css?v=1">
+</head>
+<body class="dashboard app-page campaigns-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar" aria-label="Main navigation">
+      <div class="dashboard-sidebar__header">
+        <a class="dashboard-logo app-logo-premium" href="overview.html" aria-label="Go to AdsForecast overview">
+          <span class="app-logo-premium__mark" aria-hidden="true">AF</span>
+          <span>AdsForecast</span>
+        </a>
+      </div>
+      <nav class="dashboard-sidebar__nav" aria-label="Product">
+        <ul class="dashboard-nav">
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="overview" href="overview.html">Overview</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="campaigns" href="campaigns.html">Campaigns</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="profitability" href="profitability.html">Profitability</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="integrations" href="integrations.html">Integrations</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="insights" href="insights.html">AI Analyst</a></li>
+          <li class="dashboard-nav__item dashboard-nav__item--footer"><a class="dashboard-nav__link" data-app-nav="settings" href="settings.html">Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="dashboard-topbar app-topbar-premium">
+        <div class="dashboard-topbar__titles">
+          <div class="dashboard-topbar__title-row">
+            <h1 class="dashboard-topbar__title">Campaigns</h1>
+            <span class="dashboard-env-badge" id="dashboard-env-badge" hidden></span>
+          </div>
+          <p class="dashboard-topbar__subtitle" id="campaigns-live-msg">Preparing campaign intelligence…</p>
+        </div>
+        <div class="dashboard-topbar__actions">
+          <button class="btn btn--ghost" id="campaigns-refresh-btn" type="button">Refresh data</button>
+          <button class="dashboard-sign-out" type="button" id="dashboard-sign-out">Sign out</button>
+          <div class="dashboard-user">
+            <span class="dashboard-user__avatar" aria-hidden="true"></span>
+            <a id="dashboard-profile-link" class="dashboard-user__name dashboard-user__name-link" href="profile.html">Profile</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-content campaigns-content" id="main-content" tabindex="-1">
+        <section class="campaign-hero campaign-hero--compact" aria-labelledby="campaign-hero-title">
+          <div class="campaign-hero__copy">
+            <span class="campaign-hero__eyebrow">Campaign intelligence</span>
+            <h2 id="campaign-hero-title" class="campaign-hero__title">Turn campaign evidence into a controlled budget decision.</h2>
+            <p class="campaign-hero__text">Review attributed value, break-even efficiency, modeled contribution and spend risk across a daily, weekly, monthly or custom evidence window.</p>
+            <div class="campaign-hero__actions">
+              <a class="btn btn--primary" href="integrations.html">Manage Meta connection</a>
+              <a class="btn btn--ghost" href="insights.html">Open full AI analysis</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="campaign-scope-strip" aria-label="Campaign reporting scope">
+          <div><span>Data source</span><strong id="campaign-scope-source">Resolving Meta account…</strong></div>
+          <div><span>Account</span><strong id="campaign-scope-account">—</strong></div>
+          <div><span>Reporting window</span><strong id="campaign-scope-window">Last 30 days</strong></div>
+          <div><span>Last sync</span><strong id="campaign-scope-sync">—</strong></div>
+          <a href="integrations.html">Manage connection</a>
+        </section>
+
+        <section class="campaign-period-bar" aria-label="Reporting period">
+          <div class="campaign-period-presets" role="group" aria-label="Preset date ranges"><button type="button" data-campaign-period="today">Today</button><button type="button" data-campaign-period="7d">7 days</button><button type="button" data-campaign-period="30d">30 days</button><button type="button" data-campaign-period="90d">90 days</button></div>
+          <form class="campaign-custom-range" id="campaign-custom-range"><label>From<input type="date" id="campaign-date-since" required></label><span aria-hidden="true">→</span><label>To<input type="date" id="campaign-date-until" required></label><button class="btn btn--ghost" type="submit">Apply range</button></form>
+        </section>
+        <p class="launch-feedback" id="campaign-period-feedback" role="status" aria-live="polite"></p>
+
+        <section class="campaign-summary-grid" id="campaign-summary-grid" aria-label="Campaign summary metrics">
+          <article class="metric-card metric-card--premium"><h3 class="metric-card__label">Ad spend</h3><p class="metric-card__value">—</p><p class="metric-card__hint">Loading portfolio</p></article>
+          <article class="metric-card metric-card--premium"><h3 class="metric-card__label">Purchase value</h3><p class="metric-card__value">—</p><p class="metric-card__hint">Attributed by Meta</p></article>
+          <article class="metric-card metric-card--premium"><h3 class="metric-card__label">Modeled profit</h3><p class="metric-card__value">—</p><p class="metric-card__hint">After ad and variable costs</p></article>
+          <article class="metric-card metric-card--premium"><h3 class="metric-card__label">Blended ROAS</h3><p class="metric-card__value">—</p><p class="metric-card__hint">Purchase value / spend</p></article>
+          <article class="metric-card metric-card--premium"><h3 class="metric-card__label">Purchases</h3><p class="metric-card__value">—</p><p class="metric-card__hint">Current reporting window</p></article>
+          <article class="metric-card metric-card--premium"><h3 class="metric-card__label">Risk spend</h3><p class="metric-card__value">—</p><p class="metric-card__hint">Repair and stop-loss lanes</p></article>
+        </section>
+
+        <section class="campaign-decision-rail" id="campaign-decision-rail" aria-label="Campaign decision summary"></section>
+
+        <section class="campaign-intelligence-grid" aria-label="Portfolio diagnostics and AI preview">
+          <article class="dashboard-section campaign-allocation-panel">
+            <div class="dashboard-section__header campaign-panel-head">
+              <div><span class="app-section-kicker">Portfolio diagnostics</span><h2 class="dashboard-section__title">Budget allocation map</h2><p class="dashboard-section__description">Spend share by campaign, paired with the model-led decision lane. This is allocation evidence, not a forecast.</p></div>
+              <a class="app-inline-link" href="profitability.html">Edit cost model</a>
+            </div>
+            <dl class="campaign-diagnostic-strip" id="campaign-diagnostic-strip"></dl>
+            <div class="campaign-allocation-list" id="campaign-allocation-list" aria-live="polite"></div>
+          </article>
+          <article class="dashboard-section campaign-ai-preview">
+            <div class="dashboard-section__header campaign-panel-head">
+              <div><span class="app-section-kicker">AI Analyst preview</span><h2 class="dashboard-section__title">Latest decision brief</h2><p class="dashboard-section__description" id="campaign-ai-summary">Loading the latest evidence-based analysis…</p></div>
+              <span class="ai-provider-badge" id="campaign-ai-provider">Checking</span>
+            </div>
+            <ol class="campaign-ai-list" id="campaign-ai-list"><li>Loading recommendations…</li></ol>
+            <a class="btn btn--ghost campaign-ai-open" href="insights.html">Open full AI Analyst</a>
+          </article>
+        </section>
+
+        <section class="dashboard-section campaign-console">
+          <div class="campaign-console__header">
+            <div>
+              <h2 class="dashboard-section__title">Campaign performance</h2>
+              <p class="dashboard-section__description">Campaign results for the selected reporting window. Revenue and ROAS use the same purchase-value source.</p>
+            </div>
+            <div class="campaign-toolbar" role="group" aria-label="Campaign table controls">
+              <div class="campaign-toolbar__search">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.4-4.4m2.4-5.1a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
+                <input class="dashboard-search__input" id="campaign-search-input" type="search" aria-label="Search campaigns" placeholder="Search campaigns, status, recommendations">
+              </div>
+              <select id="campaign-filter-select" class="campaign-toolbar__select" aria-label="Filter campaigns">
+                <option value="all">All campaigns</option>
+                <option value="profitable">Profitable</option>
+                <option value="losing">Losing</option>
+                <option value="no_purchases">No purchases</option>
+                <option value="strong">Strong ROAS</option>
+              </select>
+              <select id="campaign-sort-select" class="campaign-toolbar__select" aria-label="Sort campaigns">
+                <option value="spend_desc">Spend ↓</option>
+                <option value="profit_desc">Profit ↓</option>
+                <option value="revenue_desc">Revenue ↓</option>
+                <option value="purchases_desc">Purchases ↓</option>
+                <option value="roas_desc">ROAS ↓</option>
+                <option value="cpa_asc">CPA ↑</option>
+              </select>
+              <button class="btn btn--ghost campaign-export-btn" id="campaign-export-btn" type="button">Export CSV</button>
+            </div>
+          </div>
+
+          <div class="campaign-filter-bar">
+            <div class="campaign-filter-chips" role="group" aria-label="Quick filters">
+              <button class="campaign-chip campaign-chip--active" type="button" data-chip-filter="all">All</button>
+              <button class="campaign-chip" type="button" data-chip-filter="strong">Scale</button>
+              <button class="campaign-chip" type="button" data-chip-filter="losing">Fix losses</button>
+              <button class="campaign-chip" type="button" data-chip-filter="no_purchases">No purchases</button>
+            </div>
+            <div class="campaign-filter-meta"><span id="campaign-result-count" aria-live="polite">Loading campaigns…</span><button type="button" id="campaign-clear-filters">Clear filters</button></div>
+          </div>
+
+          <p class="campaign-table-hint">On small screens each row becomes a readable campaign card. Select a campaign name for the complete evidence record.</p>
+          <div class="table-wrap table-wrap--premium">
+            <table class="data-table campaigns-table">
+              <thead>
+                <tr>
+                  <th scope="col">Campaign</th>
+                  <th scope="col">Spend</th>
+                  <th scope="col">Purchases</th>
+                  <th scope="col">Revenue</th>
+                  <th scope="col">ROAS</th>
+                  <th scope="col">Profit</th>
+                  <th scope="col">CPA / CPC</th>
+                  <th scope="col">CTR</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Recommendation</th>
+                </tr>
+              </thead>
+              <tbody id="campaigns-body">
+                <tr><td colspan="10" class="data-table__loading">Loading campaign intelligence…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <dialog class="app-dialog campaign-detail-dialog" id="campaign-detail-dialog" aria-labelledby="campaign-detail-title">
+          <div id="campaign-detail-content"></div>
+        </dialog>
+      </main>
+    </div>
+  </div>
+  <script src="ui.js?v=7" defer></script>
+  <script type="module" src="campaigns.js?v=11"></script>
+</body>
+</html>

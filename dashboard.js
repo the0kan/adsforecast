@@ -1,5 +1,5 @@
 /**
- * AdProfit — dashboard client (mock data → DOM)
+ * AdsForecast — dashboard client (mock data → DOM)
  * Swap `getDashboardPayload()` for a fetch later; keep render functions pure where possible.
  */
 
@@ -7,16 +7,30 @@ import { getDashboardPayload } from "./data.js";
 import { deriveCampaignMetrics } from "./metrics.js";
 import { runInsightsEngine, DEMO_SIGNALS } from "./insights-engine.js";
 import {
-  assertAuthenticatedAppShell,
   getSession,
   signOutToLogin,
+  setSession,
 } from "./auth.js";
-import { getApiBase, getWorkspaceIdForApi } from "./config.js";
+import {
+  getFunctionsBase,
+  isSupabaseMode,
+} from "./config.js";
 import { renderSpendRevenueChart } from "./chart.js";
+import { getSupabaseAccessToken, getSupabaseClient } from "./supabase.js";
 
-const DISMISSED_ALERTS_KEY = "adprofit.dismissedAlertIds.v1";
-const INTEGRATION_DEMO_KEY = "adprofit.demo.integrationOverrides.v1";
-const LIVE_META_STATE_KEY = "adprofit.meta.liveState.v1";
+const DISMISSED_ALERTS_KEY = "adsforecast.dismissedAlertIds.v1";
+const INTEGRATION_DEMO_KEY = "adsforecast.demo.integrationOverrides.v1";
+const LIVE_META_STATE_KEY = "adsforecast.meta.liveState.v1";
+const LEGACY_STORAGE_PREFIX = ["ad", "profit"].join("");
+
+function readStorageWithMigration(key) {
+  const current = localStorage.getItem(key);
+  if (current != null) return current;
+  const legacyKey = key.replace(/^adsforecast/, LEGACY_STORAGE_PREFIX);
+  const legacy = localStorage.getItem(legacyKey);
+  if (legacy != null) localStorage.setItem(key, legacy);
+  return legacy;
+}
 
 /**
  * Reads `?meta=` from the URL (OAuth return), then removes it from the address bar.
@@ -36,10 +50,27 @@ function consumeMetaOAuthQueryParams() {
   }
 }
 
+function renderAuthRequiredState() {
+  document.body.classList.remove("dashboard--loading");
+  const root = document.querySelector(".dashboard-main");
+  if (!root) return;
+  root.innerHTML = `
+    <main class="dashboard-content">
+      <section class="dashboard-section">
+        <div class="dashboard-section__header">
+          <h2 class="dashboard-section__title">Sign in required</h2>
+          <p class="dashboard-section__description">Please sign in with Supabase before accessing your workspace dashboard.</p>
+        </div>
+        <p class="dashboard-empty">Your session is missing or expired.</p>
+        <p><a class="btn btn--primary" href="login.html?next=dashboard.html">Sign in to continue</a></p>
+      </section>
+    </main>`;
+}
+
 /** @returns {string[]} */
 function readDismissedAlertIds() {
   try {
-    const raw = localStorage.getItem(DISMISSED_ALERTS_KEY);
+    const raw = readStorageWithMigration(DISMISSED_ALERTS_KEY);
     const arr = raw ? JSON.parse(raw) : [];
     return Array.isArray(arr) ? arr.filter((x) => typeof x === "string") : [];
   } catch {
@@ -103,7 +134,7 @@ function pruneIntegrationOverrides(integrations) {
 /** @returns {Record<string, { state?: string, meta?: string, detail?: string }>} */
 function readIntegrationOverrides() {
   try {
-    const raw = localStorage.getItem(INTEGRATION_DEMO_KEY);
+    const raw = readStorageWithMigration(INTEGRATION_DEMO_KEY);
     const o = raw ? JSON.parse(raw) : {};
     return o && typeof o === "object" ? o : {};
   } catch {
@@ -295,7 +326,7 @@ function renderMetrics(pm, period) {
   const grid = document.querySelector("#metrics-grid") || document.querySelector(".metrics-grid");
   if (!grid) return;
   if (!pm || !period) {
-    console.warn("[AdProfit] Missing portfolio metrics or reporting period.");
+    console.warn("[AdsForecast] Missing portfolio metrics or reporting period.");
     return;
   }
 
@@ -725,87 +756,21 @@ function renderIntegrations(items) {
     document.querySelector("#integration-grid") ||
     document.querySelector(".integration-grid");
   if (!grid) return;
-  if (!Array.isArray(items)) return;
-
-  pruneIntegrationOverrides(items);
-
-  const ov = readIntegrationOverrides();
-  const merged = items.map((i) => ({ ...i, ...(ov[i.id] || {}) }));
-
-  grid.innerHTML = merged
-    .map((i) => {
-      const spanClass = integrationStateToClass(i.state);
-      const label = integrationStateLabel(i.state);
-      return `
-      <li>
-        <article class="integration-card" data-integration-id="${escapeHtml(i.id)}">
-          <h3 class="integration-card__name">${escapeHtml(i.displayName)}</h3>
-          <p class="integration-card__detail">${escapeHtml(i.detail)}</p>
-          <p class="integration-card__status">
-            <span class="${spanClass}">${escapeHtml(label)}</span>
-          </p>
-          <p class="integration-card__meta">${escapeHtml(i.meta)}</p>
-          ${integrationCardActions(i)}
-        </article>
-      </li>`;
-    })
-    .join("");
-
-  grid.querySelectorAll("[data-int-action]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const action = btn.getAttribute("data-int-action");
-      const iid = btn.getAttribute("data-int-id");
-      if (!action || !iid) return;
-      const base = readIntegrationOverrides();
-      if (action === "connect") {
-        base[iid] = {
-          state: "syncing",
-          detail: "OAuth flow (demo)",
-          meta: "Connecting…",
-        };
-        writeIntegrationOverrides(base);
-        showDemoToast("Starting demo connect — integration set to syncing.");
-        renderIntegrations(items);
-        window.setTimeout(() => {
-          const b = readIntegrationOverrides();
-          if (b[iid]?.state === "syncing") {
-            b[iid] = {
-              state: "connected",
-              detail: items.find((x) => x.id === iid)?.detail || "Connected",
-              meta: "Last sync · just now (demo)",
-            };
-            writeIntegrationOverrides(b);
-            renderIntegrations(items);
-            showDemoToast("Demo: marked as connected.");
-          }
-        }, 1600);
-        return;
-      }
-      if (action === "retry") {
-        base[iid] = {
-          state: "syncing",
-          meta: "Retry requested · demo",
-        };
-        writeIntegrationOverrides(base);
-        showDemoToast("Retry queued (demo).");
-        renderIntegrations(items);
-        return;
-      }
-      if (action === "sync") {
-        base[iid] = {
-          ...(base[iid] || {}),
-          meta: "Last sync · just now (demo)",
-        };
-        writeIntegrationOverrides(base);
-        showDemoToast("Sync recorded locally (demo) — would enqueue a job in production.");
-        renderIntegrations(items);
-        return;
-      }
-      if (action === "details") {
-        showDemoToast("Integration details drawer — not implemented in this demo.");
-      }
-    });
-  });
+  grid.innerHTML = `
+    <li>
+      <article class="integration-card integration-card--coming-soon">
+        <h3 class="integration-card__name">WooCommerce</h3>
+        <p class="integration-card__detail">Commerce revenue sync for richer profitability modeling.</p>
+        <p class="integration-card__status"><span class="connection-status connection-status--disconnected">Coming soon</span></p>
+      </article>
+    </li>
+    <li>
+      <article class="integration-card integration-card--coming-soon">
+        <h3 class="integration-card__name">Shopify</h3>
+        <p class="integration-card__detail">Native store sync to unify spend with net order value.</p>
+        <p class="integration-card__status"><span class="connection-status connection-status--disconnected">Coming soon</span></p>
+      </article>
+    </li>`;
 }
 
 /** @param {object} po */
@@ -1053,8 +1018,8 @@ function renderShell(shell, sessionUserName) {
 /** @param {object} m */
 function renderMeta(m) {
   if (!m) return;
-  document.documentElement.dataset.adprofitSchema = m.schemaVersion ?? "";
-  document.documentElement.dataset.adprofitEnv = m.environment ?? "";
+  document.documentElement.dataset.adsforecastSchema = m.schemaVersion ?? "";
+  document.documentElement.dataset.adsforecastEnv = m.environment ?? "";
 }
 
 /**
@@ -1191,9 +1156,12 @@ function applyLiveCampaignData(payload, campaigns, info) {
  * @param {string} base
  */
 async function fetchLiveMetaCampaigns(base) {
-  const url = `${base}/v1/integrations/meta/campaigns`;
+  const url = `${base}/meta-campaigns`;
+  const headers = { Accept: "application/json" };
+  const accessToken = await getSupabaseAccessToken();
+  if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
   const res = await fetch(url, {
-    headers: { Accept: "application/json" },
+    headers,
     credentials: "omit",
     cache: "no-store",
   });
@@ -1213,7 +1181,7 @@ async function fetchLiveMetaCampaigns(base) {
  */
 function safeStorageRead(key, fallback = "") {
   try {
-    return localStorage.getItem(key) || fallback;
+    return readStorageWithMigration(key) || fallback;
   } catch {
     return fallback;
   }
@@ -1235,8 +1203,12 @@ function safeStorageWrite(key, value) {
  * @param {string} base
  */
 async function fetchMetaAccounts(base) {
-  const res = await fetch(`${base}/v1/integrations/meta/accounts`, {
-    headers: { Accept: "application/json" },
+  const accessToken = await getSupabaseAccessToken();
+  const headers = { Accept: "application/json" };
+  if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
+  const url = `${base}/meta-accounts`;
+  const res = await fetch(url, {
+    headers,
     cache: "no-store",
     credentials: "omit",
   });
@@ -1248,8 +1220,12 @@ async function fetchMetaAccounts(base) {
  * @param {string} base
  */
 async function fetchMetaConnection(base) {
-  const res = await fetch(`${base}/v1/integrations/meta/connection`, {
-    headers: { Accept: "application/json" },
+  const accessToken = await getSupabaseAccessToken();
+  const headers = { Accept: "application/json" };
+  if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
+  const url = `${base}/meta-connection`;
+  const res = await fetch(url, {
+    headers,
     cache: "no-store",
     credentials: "omit",
   });
@@ -1262,12 +1238,16 @@ async function fetchMetaConnection(base) {
  * @param {{ accountId: string, accountName?: string | null, currency?: string | null, timezoneName?: string | null }} body
  */
 async function connectMetaAccount(base, body) {
-  const res = await fetch(`${base}/v1/integrations/meta/connect`, {
+  const accessToken = await getSupabaseAccessToken();
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  };
+  if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
+  const url = `${base}/meta-connect`;
+  const res = await fetch(url, {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    headers,
     cache: "no-store",
     credentials: "omit",
     body: JSON.stringify(body),
@@ -1380,9 +1360,25 @@ function renderMetaAccountChooser(base, accounts) {
  */
 async function hydrateMetaIntegrationUx(base, forceChooser = false) {
   if (!base) {
-    renderMetaPanelInfo("Set API base to connect Meta Ads.");
+    renderMetaPanelInfo("Supabase functions base is missing.");
     return;
   }
+  const accessToken = await getSupabaseAccessToken();
+  if (!accessToken) {
+    const panel = document.getElementById("meta-connection-panel");
+    if (!panel) return;
+    panel.innerHTML = `
+      <article class="integration-card integration-card--meta-live integration-card--meta-cta">
+        <p class="integration-card__eyebrow">Meta Ads</p>
+        <h3 class="integration-card__name">Sign in required</h3>
+        <p class="integration-card__detail">Please sign in with Supabase before connecting Meta Ads.</p>
+        <div class="integration-card__actions">
+          <a class="integration-card__btn integration-card__btn--primary" href="login.html?next=dashboard.html">Sign in to continue</a>
+        </div>
+      </article>`;
+    return;
+  }
+  const oauthStartHref = "#";
   renderMetaPanelInfo("Checking Meta connection…");
 
   if (!forceChooser) {
@@ -1412,9 +1408,10 @@ async function hydrateMetaIntegrationUx(base, forceChooser = false) {
         <h3 class="integration-card__name">${escapeHtml(title)}</h3>
         <p class="integration-card__detail">${escapeHtml(detail)}</p>
         <div class="integration-card__actions">
-          <a class="integration-card__btn integration-card__btn--primary" href="${escapeHtml(`${base}/v1/integrations/meta/start`)}">${escapeHtml(isToken ? "Reconnect Meta Ads" : "Connect Meta Ads")}</a>
+          <a class="integration-card__btn integration-card__btn--primary" href="${escapeHtml(oauthStartHref)}" id="meta-oauth-start-link">${escapeHtml(isToken ? "Reconnect Meta Ads" : "Connect Meta Ads")}</a>
         </div>
       </article>`;
+    wireMetaOauthStart(base);
     return;
   }
 
@@ -1438,15 +1435,65 @@ async function hydrateMetaIntegrationUx(base, forceChooser = false) {
     <article class="integration-card integration-card--meta-live integration-card--meta-cta">
       <p class="integration-card__eyebrow">Meta Ads</p>
       <h3 class="integration-card__name">Connect your ad account</h3>
-      <p class="integration-card__detail">Secure OAuth to the AdProfit API. Your access token is encrypted and stored in PostgreSQL — never in this browser.</p>
+      <p class="integration-card__detail">Connect your ad account to load live spend, purchases, revenue, and ROAS.</p>
       <ul class="integration-card__bullets">
         <li>Campaign spend, revenue, and efficiency metrics</li>
         <li>One-click reconnect if your session expires</li>
       </ul>
       <div class="integration-card__actions">
-        <a class="integration-card__btn integration-card__btn--primary" href="${escapeHtml(`${base}/v1/integrations/meta/start`)}">Connect Meta Ads</a>
+        <a class="integration-card__btn integration-card__btn--primary" href="${escapeHtml(oauthStartHref)}" id="meta-oauth-start-link">Connect Meta Ads</a>
       </div>
     </article>`;
+  wireMetaOauthStart(base);
+}
+
+/**
+ * @param {string} base
+ */
+function wireMetaOauthStart(base) {
+  const link = document.getElementById("meta-oauth-start-link");
+  if (!(link instanceof HTMLAnchorElement)) return;
+  link.addEventListener("click", async (e) => {
+    e.preventDefault();
+    await startMetaOauthViaSupabase(base);
+  });
+}
+
+/**
+ * Start Meta OAuth via authenticated Supabase edge function call.
+ * @param {string} base
+ */
+async function startMetaOauthViaSupabase(base) {
+  const accessToken = await getSupabaseAccessToken();
+  if (!accessToken) {
+    showDemoToast("Please sign in with Supabase before connecting Meta Ads.");
+    window.setTimeout(() => {
+      window.location.href = "login.html?next=dashboard.html";
+    }, 700);
+    return;
+  }
+  try {
+    const res = await fetch(`${base}/meta-start`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      cache: "no-store",
+      credentials: "omit",
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 401) {
+      showDemoToast("Please sign in again to connect Meta Ads.");
+      return;
+    }
+    if (!res.ok || !data?.success || typeof data?.authUrl !== "string") {
+      throw new Error("meta_start_failed");
+    }
+    window.location.href = data.authUrl;
+  } catch {
+    showDemoToast("Could not start Meta connection. Try again.");
+  }
 }
 
 /** @type {{ setBadgeCount?: (n: number) => void } | null} */
@@ -1508,104 +1555,10 @@ export function renderDashboard(payload, sessionDisplayName) {
  * @returns {Promise<ReturnType<typeof getDashboardPayload> & { alerts: unknown[], insights: unknown[] }>}
  */
 async function loadDashboardPayload() {
-  const session = getSession();
-  const base = getApiBase();
-
-  if (base) {
-    try {
-      const wid = getWorkspaceIdForApi(session);
-      const url = `${base}/v1/workspaces/${encodeURIComponent(wid)}/dashboard`;
-      /** @type {Record<string, string>} */
-      const headers = { Accept: "application/json" };
-      if (session?.accessToken) {
-        headers.Authorization = `Bearer ${session.accessToken}`;
-      }
-      const res = await fetch(url, {
-        headers,
-        credentials: "omit",
-        cache: "no-store",
-      });
-      if (res.status === 401) {
-        // Non-blocking fallback: keep dashboard usable with demo/live Meta campaigns
-        // even when auth token is missing/expired.
-        throw new Error("dashboard_api_unauthorized");
-      }
-      if (res.ok) {
-        const data = await res.json();
-        const okShape =
-          data &&
-          Array.isArray(data.campaigns) &&
-          data.workspace &&
-          data.portfolioMetrics &&
-          Array.isArray(data.alerts) &&
-          Array.isArray(data.insights);
-        if (okShape) {
-          data.meta = {
-            ...(data.meta || {}),
-            environment: "api",
-          };
-          data._campaignDataState = { mode: "demo" };
-          try {
-            const live = await fetchLiveMetaCampaigns(base);
-            const mapped = normalizeLiveCampaignRows(live?.campaigns);
-            if (mapped.length > 0) {
-              safeStorageWrite(LIVE_META_STATE_KEY, new Date().toLocaleString());
-              return applyLiveCampaignData(data, mapped, {
-                accountId:
-                  typeof live?.accountId === "string" ? live.accountId : "",
-                currency:
-                  typeof mapped[0]?.currency === "string"
-                    ? mapped[0].currency
-                    : data.portfolioMetrics?.currency || "USD",
-              });
-            }
-          } catch (liveErr) {
-            console.warn(
-              "[AdProfit] Live Meta campaigns unavailable — using dashboard payload campaigns.",
-              liveErr
-            );
-            data._campaignDataState = {
-              mode: "demo",
-              message: "Using demo data. Live Meta data is unavailable right now.",
-            };
-          }
-          return data;
-        }
-      }
-    } catch (err) {
-      console.warn("[AdProfit] Dashboard API unreachable — using embedded mock data.", err);
-    }
-  }
-
   const payload = getDashboardPayload();
   const { alerts, insights } = runInsightsEngine(payload, {
     signals: DEMO_SIGNALS,
   });
-  if (base) {
-    try {
-      const live = await fetchLiveMetaCampaigns(base);
-      const mapped = normalizeLiveCampaignRows(live?.campaigns);
-      if (mapped.length > 0) {
-        safeStorageWrite(LIVE_META_STATE_KEY, new Date().toLocaleString());
-        return applyLiveCampaignData({ ...payload, alerts, insights }, mapped, {
-          accountId: typeof live?.accountId === "string" ? live.accountId : "",
-          currency:
-            typeof mapped[0]?.currency === "string" ? mapped[0].currency : "USD",
-        });
-      }
-    } catch (liveErr) {
-      console.warn("[AdProfit] Live Meta campaigns unavailable — using embedded demo data.", liveErr);
-      return {
-        ...payload,
-        alerts,
-        insights,
-        _campaignDataState: {
-          mode: "demo",
-          message: "Using demo data. Live Meta data is unavailable right now.",
-        },
-      };
-    }
-  }
   return { ...payload, alerts, insights, _campaignDataState: { mode: "demo" } };
 }
 
@@ -1618,10 +1571,69 @@ function isDashboardPayload(payload) {
 }
 
 async function init() {
-  assertAuthenticatedAppShell();
+  if (!isSupabaseMode()) {
+    renderMetaPanelInfo("Supabase configuration is required for dashboard access.");
+    renderAuthRequiredState();
+    return;
+  }
+
+  const supabase = await getSupabaseClient();
+  if (!supabase) {
+    renderMetaPanelInfo("Could not initialize Supabase client.");
+    renderAuthRequiredState();
+    return;
+  }
+
+  const sessionResult = await supabase.auth.getSession();
+  const sbSession = sessionResult.data?.session || null;
+  if (!sbSession?.access_token || !sbSession.user) {
+    renderAuthRequiredState();
+    return;
+  }
+
+  const functionsBase = getFunctionsBase();
+  if (!functionsBase) {
+    renderMetaPanelInfo("Supabase functions URL is missing.");
+    return;
+  }
+
+  let workspaceId = "ws_nw_01";
+  try {
+    const wsRes = await fetch(`${functionsBase}/workspace-bootstrap`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${sbSession.access_token}`,
+      },
+      body: JSON.stringify({ email: sbSession.user.email || "" }),
+      cache: "no-store",
+      credentials: "omit",
+    });
+    const wsData = await wsRes.json().catch(() => ({}));
+    if (wsRes.ok && typeof wsData?.workspace?.id === "string") {
+      workspaceId = wsData.workspace.id;
+    }
+  } catch {
+    /* keep fallback */
+  }
+
+  setSession({
+    userId: sbSession.user.id,
+    email: sbSession.user.email || "user@example.com",
+    displayName:
+      sbSession.user.user_metadata?.display_name ||
+      (sbSession.user.email || "member").split("@")[0],
+    workspaceId,
+    accessToken: sbSession.access_token,
+    expiresAt: sbSession.expires_at
+      ? new Date(sbSession.expires_at * 1000).toISOString()
+      : null,
+    issuedAt: new Date().toISOString(),
+  });
 
   const session = getSession();
-  const sessionDisplayName = session?.displayName;
+  const sessionDisplayName = session?.displayName || (sbSession.user.email || "").split("@")[0];
 
   notifyUi = setupNotifications();
   renderCampaignDataState({ mode: "loading" });
@@ -1639,7 +1651,7 @@ async function init() {
   setupCampaignControls();
   setupCampaignSearch();
   applyCampaignSearch("");
-  const base = getApiBase();
+  const endpointBase = functionsBase;
   const metaOAuth = consumeMetaOAuthQueryParams();
   if (metaOAuth === "connected") {
     showDemoToast("Meta connected. Loading your ad accounts…");
@@ -1651,10 +1663,42 @@ async function init() {
     showDemoToast("Meta sign-in did not complete. Try again.");
   }
 
-  hydrateMetaIntegrationUx(base, metaOAuth === "select-account").catch((e) => {
-    console.warn("[AdProfit] Meta integration panel failed to load.", e);
+  hydrateMetaIntegrationUx(endpointBase, metaOAuth === "select-account").catch((e) => {
+    console.warn("[AdsForecast] Meta integration panel failed to load.", e);
     renderMetaPanelInfo("Could not load Meta connection status.");
   });
+
+  try {
+    const live = await fetchLiveMetaCampaigns(endpointBase);
+    const mapped = normalizeLiveCampaignRows(live?.campaigns);
+    if (mapped.length > 0) {
+      safeStorageWrite(LIVE_META_STATE_KEY, new Date().toLocaleString());
+      const nextPayload = applyLiveCampaignData(payload, mapped, {
+        accountId: typeof live?.accountId === "string" ? live.accountId : "",
+        currency: typeof mapped[0]?.currency === "string" ? mapped[0].currency : "USD",
+      });
+      renderDashboard(nextPayload, sessionDisplayName);
+      renderCampaignDataState(nextPayload._campaignDataState || { mode: "live" });
+    } else {
+      renderCampaignDataState({
+        mode: "demo",
+        message: "Demo data shown because live Meta data is unavailable.",
+      });
+      renderDataSourceBadge({
+        mode: "demo",
+        message: "Demo data shown because live Meta data is unavailable.",
+      });
+    }
+  } catch {
+    renderCampaignDataState({
+      mode: "demo",
+      message: "Demo data shown because live Meta data is unavailable.",
+    });
+    renderDataSourceBadge({
+      mode: "demo",
+      message: "Demo data shown because live Meta data is unavailable.",
+    });
+  }
 
   const restoreAlerts = document.getElementById("alerts-restore-dismissed");
   if (restoreAlerts instanceof HTMLButtonElement) {
@@ -1673,12 +1717,16 @@ async function init() {
   if (signOut instanceof HTMLButtonElement) {
     signOut.addEventListener("click", () => signOutToLogin());
   }
+  const refresh = document.getElementById("dashboard-refresh-btn");
+  if (refresh instanceof HTMLButtonElement) {
+    refresh.addEventListener("click", () => window.location.reload());
+  }
 }
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
-    init().catch((err) => console.error("[AdProfit] Dashboard init failed", err));
+    init().catch((err) => console.error("[AdsForecast] Dashboard init failed", err));
   });
 } else {
-  init().catch((err) => console.error("[AdProfit] Dashboard init failed", err));
+  init().catch((err) => console.error("[AdsForecast] Dashboard init failed", err));
 }

@@ -1,42 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Sign in to AdProfit — profit intelligence for Meta Ads and your stores.">
-  <meta name="theme-color" content="#09090b">
-  <meta name="adprofit-api-base" content="https://adprofit.onrender.com">
-  <title>Sign in — AdProfit</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="auth.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sign in to AdsForecast — profit intelligence for Meta Ads and commerce brands." />
+  <meta name="theme-color" content="#08070d" />
+  <meta name="adsforecast-api-base" content="https://qlwaxfkmeukhhuwwgllk.supabase.co" />
+  <meta name="adsforecast-supabase-url" content="https://qlwaxfkmeukhhuwwgllk.supabase.co" />
+  <meta name="adsforecast-supabase-anon-key" content="sb_publishable__01tCxPjMTliQTxOHRdgyQ_DAPLrAJh" />
+
+  <title>Sign in — AdsForecast</title>
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="styles.css?v=10" />
+  <link rel="stylesheet" href="auth.css?v=12" />
 </head>
+
 <body class="page auth-page">
+  <main class="auth-stage" aria-labelledby="auth-heading">
+    <div class="auth-grid" aria-hidden="true"></div>
+    <div class="auth-orb auth-orb--one" aria-hidden="true"></div>
+    <div class="auth-orb auth-orb--two" aria-hidden="true"></div>
+    <div class="auth-orb auth-orb--three" aria-hidden="true"></div>
 
-  <main class="auth-shell">
-    <div class="auth-card">
-      <a class="site-logo" href="index.html">AdProfit</a>
-      <h1 class="auth-title">Sign in</h1>
-      <p class="auth-lead">Sign in with your workspace credentials. With the API configured, requests go to the live backend; otherwise this browser uses a local demo session.</p>
+    <section class="auth-shell auth-shell--premium">
+      <div class="auth-panel auth-panel--form">
+        <a class="auth-brand" href="index.html" aria-label="AdsForecast home">
+          <span class="auth-brand__mark">AF</span>
+          <span class="auth-brand__copy">
+            <strong>AdsForecast</strong>
+            <small>Profit intelligence</small>
+          </span>
+        </a>
 
-      <form class="auth-form" id="login-form" novalidate>
-        <div class="auth-field">
-          <label for="login-email">Work email</label>
-          <input id="login-email" name="email" type="email" autocomplete="username" required placeholder="you@company.com">
+        <div class="auth-copy">
+          <span class="auth-kicker">Secure workspace</span>
+          <h1 class="auth-title" id="auth-heading">Welcome back</h1>
+          <p class="auth-lead">
+            Sign in to your profit command center and monitor Meta spend,
+            purchases, ROAS, CPA, and estimated profit from one workspace.
+          </p>
         </div>
-        <div class="auth-field">
-          <label for="login-password">Password</label>
-          <input id="login-password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••">
-        </div>
-        <p class="auth-error" id="login-error" aria-live="polite"></p>
-        <button type="submit" class="btn btn--primary btn--large auth-submit">Continue</button>
-      </form>
 
-      <p class="auth-hint">Tip: use the email format you signed up with. Session data stays in this browser until you sign out.</p>
-      <p class="auth-footer">No account? <a href="signup.html">Create one</a> · <a href="index.html">Back to site</a></p>
-    </div>
+        <form class="auth-form" id="login-form" novalidate>
+          <div class="auth-field">
+            <label for="login-email">Work email</label>
+            <div class="auth-input-wrap">
+              <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M4 6.75A2.75 2.75 0 0 1 6.75 4h10.5A2.75 2.75 0 0 1 20 6.75v10.5A2.75 2.75 0 0 1 17.25 20H6.75A2.75 2.75 0 0 1 4 17.25V6.75Zm2.05.22 5.36 4.12c.35.27.83.27 1.18 0l5.36-4.12a1.25 1.25 0 0 0-.7-1.47H6.75c-.3 0-.55.1-.7.47Zm12.45 1.72-4.99 3.83a2.45 2.45 0 0 1-3.02 0L5.5 8.69v8.56c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25V8.69Z" fill="currentColor"/>
+              </svg>
+              <input
+                id="login-email"
+                name="email"
+                type="email"
+                autocomplete="username"
+                required
+                placeholder="you@company.com"
+              />
+            </div>
+          </div>
+
+          <div class="auth-field">
+            <label for="login-password">Password</label>
+            <div class="auth-input-wrap">
+              <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M7.75 10V8.25a4.25 4.25 0 0 1 8.5 0V10h.25A2.5 2.5 0 0 1 19 12.5v5A2.5 2.5 0 0 1 16.5 20h-9A2.5 2.5 0 0 1 5 17.5v-5A2.5 2.5 0 0 1 7.5 10h.25Zm1.5 0h5.5V8.25a2.75 2.75 0 0 0-5.5 0V10Zm-1.75 1.5A1 1 0 0 0 6.5 12.5v5a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1h-9Z" fill="currentColor"/>
+              </svg>
+              <input
+                id="login-password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+                placeholder="Enter your password"
+              />
+              <button class="auth-password-toggle" type="button" data-password-toggle="login-password" aria-label="Show password">Show</button>
+            </div>
+          </div>
+
+          <p class="auth-error" id="login-error" role="alert" aria-live="polite"></p>
+
+          <button type="submit" class="auth-btn auth-btn--primary auth-submit">
+            <span>Continue to dashboard</span>
+            <svg class="auth-btn__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </button>
+
+          <div class="auth-divider"><span>or</span></div>
+
+          <button type="button" class="auth-btn auth-btn--magic" id="login-magic-link-btn">
+            <svg class="auth-btn__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M4 6h16v12H4zM4 7l8 6 8-6"/>
+            </svg>
+            <span>Email me a secure login link</span>
+          </button>
+          <p class="auth-magic-hint">No password needed. We’ll send a one-time sign-in link to your email.</p>
+        </form>
+
+        <div class="auth-security-row">
+          <span>Encrypted session</span>
+          <span>Supabase Auth</span>
+          <span>Protected workspace</span>
+        </div>
+
+        <p class="auth-footer">
+          No account?
+          <a href="signup.html">Create account</a>
+          <span>·</span>
+          <a href="index.html">Back to site</a>
+        </p>
+      </div>
+
+      <aside class="auth-panel auth-panel--visual" aria-label="AdsForecast product preview">
+        <div class="visual-topline">
+          <span class="visual-live-dot"></span>
+          Illustrative product preview
+        </div>
+
+        <div class="auth-hero-visual">
+          <div class="mock-window">
+            <div class="mock-window__bar">
+              <span></span><span></span><span></span>
+              <em>overview.html</em>
+            </div>
+
+            <div class="mock-window__body">
+              <div class="mock-sidebar">
+                <i></i><i></i><i></i><i></i>
+              </div>
+
+              <div class="mock-content">
+                <div class="mock-metrics">
+                  <div class="mock-card mock-card--large">
+                    <small>Estimated profit</small>
+                    <strong>+$12.4k</strong>
+                    <span>+18.6% this period</span>
+                  </div>
+
+                  <div class="mock-card">
+                    <small>ROAS</small>
+                    <strong>3.24</strong>
+                  </div>
+                </div>
+
+                <div class="mock-chart" aria-hidden="true">
+                  <span style="--h: 42%"></span>
+                  <span style="--h: 66%"></span>
+                  <span style="--h: 48%"></span>
+                  <span style="--h: 84%"></span>
+                  <span style="--h: 58%"></span>
+                  <span style="--h: 92%"></span>
+                  <span style="--h: 74%"></span>
+                </div>
+
+                <div class="mock-row"><b></b><span></span><em></em></div>
+                <div class="mock-row"><b></b><span></span><em></em></div>
+                <div class="mock-row mock-row--short"><b></b><span></span><em></em></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="floating-pill floating-pill--meta">
+            <span></span>
+            Sample Meta workspace
+          </div>
+
+          <div class="floating-pill floating-pill--insight">
+            Example: review 1 · scale 2
+          </div>
+
+          <div class="floating-card floating-card--profit">
+            <small>Spend</small>
+            <strong>$42.8k</strong>
+          </div>
+
+          <div class="floating-card floating-card--revenue">
+            <small>CPA</small>
+            <strong>$18.40</strong>
+          </div>
+        </div>
+      </aside>
+    </section>
   </main>
 
-  <script type="module" src="login.js"></script>
+  <script src="ui.js?v=6" defer></script>
+  <script type="module" src="login.js?v=10"></script>
 </body>
 </html>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">AdsForecast — Profit intelligence for Meta Ads</title>
+  <desc id="desc">AdsForecast brand card with a campaign performance forecast illustration.</desc>
+  <defs>
+    <linearGradient id="bg" x1="75" y1="20" x2="1110" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#151222"/><stop offset=".54" stop-color="#08070D"/><stop offset="1" stop-color="#0D0A14"/>
+    </linearGradient>
+    <linearGradient id="signal" x1="802" y1="455" x2="1084" y2="155" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B7CF6"/><stop offset=".56" stop-color="#F05CA8"/><stop offset="1" stop-color="#FF755F"/>
+    </linearGradient>
+    <linearGradient id="af" x1="13" y1="54" x2="53" y2="10" gradientUnits="userSpaceOnUse"><stop stop-color="#6D5EF4"/><stop offset=".55" stop-color="#7B68F6"/><stop offset="1" stop-color="#655CF0"/></linearGradient>
+    <linearGradient id="tip" x1="45" y1="29" x2="58" y2="38" gradientUnits="userSpaceOnUse"><stop stop-color="#FF6A59"/><stop offset="1" stop-color="#FF8064"/></linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientTransform="translate(230 88) rotate(47) scale(414 340)" gradientUnits="userSpaceOnUse"><stop stop-color="#8B7CF6" stop-opacity=".3"/><stop offset="1" stop-color="#8B7CF6" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientTransform="translate(1050 555) rotate(-130) scale(384 318)" gradientUnits="userSpaceOnUse"><stop stop-color="#F05CA8" stop-opacity=".19"/><stop offset="1" stop-color="#F05CA8" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" rx="42" fill="url(#bg)"/>
+  <rect x="1" y="1" width="1198" height="628" rx="41" fill="none" stroke="#332E42" stroke-width="2"/>
+  <rect width="1200" height="630" rx="42" fill="url(#glowA)"/><rect width="1200" height="630" rx="42" fill="url(#glowB)"/>
+  <g transform="translate(76 72)">
+    <g transform="translate(2 2) scale(1.08)"><path d="M8.7 51.7 26.5 13.6c1-2.2 2.9-3.4 5.3-3.4h22.7c2.8 0 4.3 2.8 2.8 5.1l-3.4 5.2c-1 1.6-2.4 2.3-4.3 2.3H39.2l3.1 7.1h10.2l-6 9.2h-.2l5.5 12.6c.9 2.1-.6 4.5-2.9 4.5h-5.5c-2.3 0-4.1-1.2-5-3.4L31 34.7l-8.3 18.2c-1 2.2-2.8 3.3-5.2 3.3h-5.9c-2.4 0-3.9-2.4-2.9-4.5Z" fill="url(#af)"/><path d="M42.3 29.9h13.9c1.8 0 2.8 1.9 1.8 3.4l-3.1 4.6c-.8 1.1-1.8 1.7-3.2 1.7h-5.2l-4.2-9.7Z" fill="url(#tip)"/></g>
+    <text x="88" y="48" fill="#F7F5FA" font-family="Manrope, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="33" font-weight="750" letter-spacing="-1.4">AdsForecast</text>
+  </g>
+  <text x="76" y="270" fill="#F7F5FA" font-family="Manrope, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="70" font-weight="700" letter-spacing="-3.7">Know which campaigns</text>
+  <text x="76" y="350" fill="#F7F5FA" font-family="Manrope, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="70" font-weight="700" letter-spacing="-3.7">deserve the next dollar.</text>
+  <text x="78" y="420" fill="#B8B1C3" font-family="Manrope, Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="25" font-weight="500">Profit intelligence and evidence-led AI for Meta Ads.</text>
+  <g transform="translate(768 118)">
+    <path d="M24 374V286a22 22 0 0 1 22-22h46a22 22 0 0 1 22 22v88H24Zm116 0V210a22 22 0 0 1 22-22h46a22 22 0 0 1 22 22v164h-90Zm116 0V132a22 22 0 0 1 22-22h46a22 22 0 0 1 22 22v242h-90Z" fill="url(#signal)" opacity=".52"/>
+    <path d="m26 230 96-86 72 43L330 52m-74 0h74v74" fill="none" stroke="url(#signal)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="26" cy="230" r="13" fill="#55DFC0" stroke="#100E18" stroke-width="7"/>
+  </g>
+</svg>

@@ -1,7 +1,7 @@
 # Static site — repo root is the publish folder (no build step)
 [build]
   publish = "."
-  command = "echo 'AdProfit: static HTML/CSS/JS'"
+  command = "echo 'AdsForecast: static HTML/CSS/JS'"
 
 [[headers]]
   for = "/*"

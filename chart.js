@@ -1,5 +1,5 @@
 /**
- * AdProfit — lightweight SVG chart (spend vs revenue), no dependencies.
+ * AdsForecast — lightweight SVG chart (spend vs revenue), no dependencies.
  * Grid, axes, legend, and pointer tooltips for the performance series.
  * @module chart
  */
@@ -7,15 +7,22 @@
 /**
  * @param {HTMLElement | null} root
  * @param {{ points?: Array<{ date: string, spend: number, revenue: number }> }} series
+ * @param {{ currency?: string, source?: "live" | "demo" }} options
  */
-export function renderSpendRevenueChart(root, series) {
+export function renderSpendRevenueChart(root, series, options = {}) {
   if (!root) return;
   const points = series?.points;
   if (!Array.isArray(points) || points.length === 0) {
-    root.innerHTML =
-      '<p class="performance-chart__empty">No performance series to chart.</p>';
+    root.innerHTML = `
+      <div class="performance-chart__empty" role="status">
+        <strong>Daily trend is not available yet</strong>
+        <span>Campaign totals are live. A daily chart will appear after time-series sync is enabled.</span>
+      </div>`;
     return;
   }
+
+  const currency = String(options.currency || "USD").toUpperCase();
+  const isDemo = options.source === "demo";
 
   const uid =
     typeof crypto !== "undefined" && crypto.randomUUID
@@ -79,7 +86,7 @@ export function renderSpendRevenueChart(root, series) {
     <div class="performance-chart__shell">
       <div class="performance-chart__head">
         <span class="performance-chart__head-title">Spend vs revenue</span>
-        <span class="performance-chart__head-sub">Daily · USD (mock)</span>
+        <span class="performance-chart__head-sub">Daily · ${escapeHtml(currency)}${isDemo ? " · Sample data" : ""}</span>
       </div>
       <div class="performance-chart__plot" id="performance-chart-plot-${uid}">
         <svg class="performance-chart__svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Daily spend and revenue for the last ${n} days">
@@ -111,7 +118,7 @@ export function renderSpendRevenueChart(root, series) {
         </svg>
         <div class="performance-chart__tooltip" id="performance-chart-tooltip-${uid}" hidden></div>
       </div>
-      <div class="performance-chart__legend" aria-hidden="true">
+      <div class="performance-chart__legend">
         <span class="performance-chart__legend-item"><span class="performance-chart__swatch performance-chart__swatch--revenue"></span> Revenue</span>
         <span class="performance-chart__legend-item"><span class="performance-chart__swatch performance-chart__swatch--spend"></span> Spend</span>
       </div>
@@ -131,8 +138,8 @@ export function renderSpendRevenueChart(root, series) {
     const dateLabel = formatLongDate(p.date);
     tooltip.innerHTML = `
       <span class="performance-chart__tooltip-date">${escapeHtml(dateLabel)}</span>
-      <span class="performance-chart__tooltip-row"><span class="performance-chart__tooltip-k">Revenue</span> <span class="performance-chart__tooltip-v performance-chart__tooltip-v--rev">${escapeHtml(formatMoney(p.revenue ?? 0))}</span></span>
-      <span class="performance-chart__tooltip-row"><span class="performance-chart__tooltip-k">Spend</span> <span class="performance-chart__tooltip-v performance-chart__tooltip-v--spend">${escapeHtml(formatMoney(p.spend ?? 0))}</span></span>`;
+      <span class="performance-chart__tooltip-row"><span class="performance-chart__tooltip-k">Revenue</span> <span class="performance-chart__tooltip-v performance-chart__tooltip-v--rev">${escapeHtml(formatMoney(p.revenue ?? 0, currency))}</span></span>
+      <span class="performance-chart__tooltip-row"><span class="performance-chart__tooltip-k">Spend</span> <span class="performance-chart__tooltip-v performance-chart__tooltip-v--spend">${escapeHtml(formatMoney(p.spend ?? 0, currency))}</span></span>`;
     tooltip.hidden = false;
   }
 
@@ -200,10 +207,10 @@ function formatAxisMoney(v) {
 /**
  * @param {number} v
  */
-function formatMoney(v) {
+function formatMoney(v, currency = "USD") {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "USD",
+    currency,
     maximumFractionDigits: 0,
   }).format(v);
 }

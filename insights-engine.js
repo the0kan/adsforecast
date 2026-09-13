@@ -1,5 +1,5 @@
 /**
- * AdProfit — rule-based alerts & recommendations (client; portable to server)
+ * AdsForecast — rule-based alerts & recommendations (client; portable to server)
  * Inputs: campaign rows + optional trend/budget signals. Outputs match `data.js` shapes.
  *
  * @module insights-engine

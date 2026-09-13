@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="AdsForecast Integrations — connect Meta Ads and prepare store revenue integrations.">
+  <meta name="theme-color" content="#08070d">
+  <meta name="adsforecast-api-base" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-url" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-anon-key" content="sb_publishable__01tCxPjMTliQTxOHRdgyQ_DAPLrAJh">
+  <title>Integrations — AdsForecast</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="product.css?v=7">
+  <link rel="stylesheet" href="launch.css?v=1">
+</head>
+<body class="dashboard app-page app-page--integrations">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar" aria-label="Main navigation">
+      <div class="dashboard-sidebar__header">
+        <a class="dashboard-logo" href="overview.html" aria-label="Go to AdsForecast overview">
+          <span class="dashboard-logo__mark" aria-hidden="true">AF</span>
+          <span class="dashboard-logo__text">AdsForecast</span>
+        </a>
+      </div>
+      <nav class="dashboard-sidebar__nav" aria-label="Product">
+        <ul class="dashboard-nav">
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="overview" href="overview.html">Overview</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="campaigns" href="campaigns.html">Campaigns</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="profitability" href="profitability.html">Profitability</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="integrations" href="integrations.html">Integrations</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="insights" href="insights.html">AI Analyst</a></li>
+          <li class="dashboard-nav__item dashboard-nav__item--footer"><a class="dashboard-nav__link" data-app-nav="settings" href="settings.html">Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="dashboard-topbar">
+        <div class="dashboard-topbar__titles">
+          <div class="dashboard-topbar__title-row">
+            <h1 class="dashboard-topbar__title">Integrations</h1>
+            <span class="dashboard-env-badge dashboard-env-badge--demo" id="dashboard-env-badge">Checking</span>
+          </div>
+          <p class="dashboard-topbar__subtitle">Manage source authorization, account scope, synchronization health and data boundaries.</p>
+        </div>
+        <div class="dashboard-topbar__actions">
+          <a class="btn btn--ghost" href="campaigns.html">Campaigns</a>
+          <button class="dashboard-sign-out" type="button" id="dashboard-sign-out">Sign out</button>
+          <div class="dashboard-user">
+            <span class="dashboard-user__avatar" aria-hidden="true"></span>
+            <a id="dashboard-profile-link" class="dashboard-user__name dashboard-user__name-link" href="profile.html">Profile</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-content" id="main-content" tabindex="-1">
+        <section class="integration-hero app-page-header app-page-header--premium">
+          <div class="integration-hero__copy">
+            <span class="app-eyebrow">Connection center</span>
+            <h2 class="app-page-header__title">A trustworthy source layer for every decision.</h2>
+            <p class="app-page-header__desc">Meta Ads supplies live delivery and attributed purchase evidence. Connection state, account scope and latest sync are kept explicit so reports never silently fall back to fake data.</p>
+            <div class="integration-hero__actions">
+              <a class="btn btn--primary" href="#meta-integration-mount">Manage Meta Ads</a>
+              <a class="btn btn--ghost" href="settings.html">Workspace settings</a>
+            </div>
+          </div>
+
+          <div class="integration-orbit" aria-hidden="true">
+            <div class="integration-orbit__core">
+              <span>AF</span>
+              <small>Profit graph</small>
+            </div>
+            <div class="integration-orbit__node integration-orbit__node--meta">Meta</div>
+            <div class="integration-orbit__node integration-orbit__node--woo">Woo</div>
+            <div class="integration-orbit__node integration-orbit__node--shopify">Shopify</div>
+            <div class="integration-orbit__line integration-orbit__line--a"></div>
+            <div class="integration-orbit__line integration-orbit__line--b"></div>
+          </div>
+        </section>
+
+        <section class="integration-status-strip" aria-label="Integration pipeline status">
+          <article class="integration-mini-stat">
+            <span class="integration-mini-stat__label">Active source</span>
+            <strong id="integration-active-source">Checking…</strong>
+          </article>
+          <article class="integration-mini-stat">
+            <span class="integration-mini-stat__label">Auth model</span>
+            <strong>Supabase</strong>
+          </article>
+          <article class="integration-mini-stat">
+            <span class="integration-mini-stat__label">Token storage</span>
+            <strong>Encrypted edge flow</strong>
+          </article>
+        </section>
+
+        <section id="meta-integration-mount" class="meta-integration-mount" aria-live="polite">
+          <article class="integration-card integration-card--meta-live integration-card--skeleton">
+            <div class="integration-skeleton-line integration-skeleton-line--wide"></div>
+            <div class="integration-skeleton-line"></div>
+            <div class="integration-skeleton-line integration-skeleton-line--short"></div>
+          </article>
+        </section>
+
+        <section class="integration-contract-grid" aria-label="Integration data contract">
+          <article class="dashboard-section"><span class="app-section-kicker">Permission boundary</span><h3>Read-only campaign evidence</h3><p>AdsForecast requests the advertising read scope. It does not publish ads, change campaign state or edit budgets.</p><ul><li>Spend and delivery metrics</li><li>Attributed purchases and purchase value</li><li>Campaign names and identifiers</li></ul></article>
+          <article class="dashboard-section"><span class="app-section-kicker">Credential boundary</span><h3>Token stays server-side</h3><p>The Meta access token is encrypted before storage and is never returned to product JavaScript or browser storage.</p><ul><li>OAuth state is signed and time-bounded</li><li>Workspace access is checked per request</li><li>Connection failures never reveal secrets</li></ul></article>
+          <article class="dashboard-section"><span class="app-section-kicker">Reporting boundary</span><h3>No silent demo fallback</h3><p>If live Meta data cannot be loaded, the product shows a clear unavailable state instead of mixing sample rows into the account.</p><ul><li>Live and demo modes stay separated</li><li>Latest sync status remains visible</li><li>Profit remains a modeled estimate</li></ul></article>
+        </section>
+
+        <section class="dashboard-section integration-roadmap-section">
+          <div class="dashboard-section__header">
+            <span class="app-eyebrow">Planned source catalog</span>
+            <h3 class="dashboard-section__title">Commerce data comes after Meta stability</h3>
+            <p class="dashboard-section__description">These providers are roadmap items, not working connections. They remain disabled until OAuth, webhooks, reconciliation and data quality checks are production-ready.</p>
+          </div>
+
+          <ul class="integration-grid integration-roadmap-grid">
+            <li>
+              <article class="integration-card integration-card--coming-soon integration-card--roadmap">
+                <div class="integration-card__icon integration-card__icon--woo" aria-hidden="true">W</div>
+                <p class="integration-card__eyebrow">Store revenue</p>
+                <h3 class="integration-card__name">WooCommerce</h3>
+                <p class="integration-card__detail">Order sync, refunds, COGS defaults, shipping fees, and margin by campaign.</p>
+                <p class="integration-card__status"><span class="connection-status connection-status--disconnected">Coming soon</span></p>
+              </article>
+            </li>
+            <li>
+              <article class="integration-card integration-card--coming-soon integration-card--roadmap">
+                <div class="integration-card__icon integration-card__icon--shopify" aria-hidden="true">S</div>
+                <p class="integration-card__eyebrow">Commerce platform</p>
+                <h3 class="integration-card__name">Shopify</h3>
+                <p class="integration-card__detail">Native Shopify margin analysis, product mix, and blended profit reporting.</p>
+                <p class="integration-card__status"><span class="connection-status connection-status--disconnected">Coming soon</span></p>
+              </article>
+            </li>
+          </ul>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="ui.js?v=7" defer></script>
+  <script type="module" src="integrations.js?v=8"></script>
+</body>
+</html>

@@ -10,9 +10,9 @@ Stack: **Node.js**, **Express**, **PostgreSQL**, **Prisma**, **JWT** (access tok
 ## 1. Create database
 
 ```bash
-createdb adprofit
+createdb adsforecast
 # or Docker:
-# docker run --name adprofit-pg -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=adprofit -p 5432:5432 -d postgres:16
+# docker run --name adsforecast-pg -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=adsforecast -p 5432:5432 -d postgres:16
 ```
 
 ## 2. Configure environment
@@ -24,9 +24,9 @@ cp .env.example .env
 
 Edit `DATABASE_URL`, `JWT_SECRET` (≥16 random characters), `CORS_ORIGIN` (comma-separated origins), and **`TOKEN_ENCRYPTION_SECRET`** (any strong random string; **required when `NODE_ENV=production`** — Meta user tokens are encrypted at rest with AES-256-GCM). In non-production, if it is missing, the server logs a warning and uses a dev-only derived key (not for real customers).
 
-**Production (okan-ozkan.eu + Render API):** Include `https://okan-ozkan.eu` in `CORS_ORIGIN`. Set `FRONTEND_URL=https://okan-ozkan.eu` so Meta OAuth returns users to `dashboard.html?meta=…`. Set `META_REDIRECT_URI` to the deployed callback URL, e.g. `https://adprofit.onrender.com/v1/integrations/meta/callback`. That URL must match **Valid OAuth Redirect URIs** in the Meta app exactly.
+**Production (adsforecast.com + Supabase Edge Functions):** Include `https://adsforecast.com` in `CORS_ORIGIN`. Set `FRONTEND_URL=https://adsforecast.com` so Meta OAuth returns users to `integrations.html?meta=…`. Set `META_REDIRECT_URI` to the deployed callback URL, e.g. `https://<project-ref>.supabase.co/functions/v1/meta-callback`. That URL must match **Valid OAuth Redirect URIs** in the Meta app exactly.
 
-**Workspace for Meta (MVP):** By default the API attaches Meta connections to the workspace with slug `adprofit-demo` (created by `npm run db:seed`). Override with `DEFAULT_META_WORKSPACE_SLUG` or `DEFAULT_META_WORKSPACE_ID`.
+**Workspace for Meta (MVP):** By default the API attaches Meta connections to the workspace with slug `adsforecast-demo` (created by `npm run db:seed`). Override with `DEFAULT_META_WORKSPACE_SLUG` or `DEFAULT_META_WORKSPACE_ID`.
 
 **Local dev:** You can use `http://localhost:5173` for `CORS_ORIGIN` and add a second redirect URI in Meta for `http://localhost:3000/v1/integrations/meta/callback` if you test OAuth locally.
 
@@ -87,7 +87,7 @@ Endpoints:
 
 ## 6. Frontend with real auth
 
-1. Point the browser at the API: `?api=http://localhost:3000` on `login.html` / `dashboard.html`, or set `localStorage.setItem('adprofit.apiBase', 'http://localhost:3000')`, or fill `<meta name="adprofit-api-base" content="...">`.
+1. Point the browser at the API: `?api=http://localhost:3000` on `login.html` / `dashboard.html`, or set `localStorage.setItem('adsforecast.apiBase', 'http://localhost:3000')`, or fill `<meta name="adsforecast-api-base" content="...">`.
 2. **Sign up or sign in** — the client stores `accessToken` and `workspaceId` from the JSON response.
 3. Open the dashboard — requests send `Authorization: Bearer <token>`.
 

@@ -1,0 +1,88 @@
+project_id = "adsforecast-platform"
+
+[functions.backend-health]
+verify_jwt = false
+
+[functions.workspace-bootstrap]
+verify_jwt = true
+
+[functions.meta-start]
+verify_jwt = true
+
+[functions.meta-callback]
+# Meta redirects here without the user's Authorization header. OAuth state is
+# separately signed and verified inside the function.
+verify_jwt = false
+
+[functions.meta-accounts]
+verify_jwt = true
+
+[functions.meta-connect]
+verify_jwt = true
+
+[functions.meta-connection]
+verify_jwt = true
+
+[functions.meta-campaigns]
+verify_jwt = true
+
+[functions.ai-analyze]
+verify_jwt = true
+
+[functions.ai-insights]
+verify_jwt = true
+
+[functions.account-center]
+enabled = true
+verify_jwt = true
+import_map = "./functions/account-center/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/account-center/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/account-center/*.html" ]
+
+[functions.billing-center]
+enabled = true
+verify_jwt = true
+import_map = "./functions/billing-center/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/billing-center/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/billing-center/*.html" ]
+
+[functions.stripe-webhook]
+enabled = true
+verify_jwt = false
+import_map = "./functions/stripe-webhook/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/stripe-webhook/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/stripe-webhook/*.html" ]
+
+[functions.support-center]
+enabled = true
+verify_jwt = true
+import_map = "./functions/support-center/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/support-center/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/support-center/*.html" ]
+
+[functions.admin-console]
+enabled = true
+verify_jwt = true
+import_map = "./functions/admin-console/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/admin-console/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/admin-console/*.html" ]

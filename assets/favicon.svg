@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="8" fill="#09090b"/>
-  <path stroke="#a1a1ff" stroke-width="2" stroke-linecap="round" fill="none" d="M9 21V11M9 21h14"/>
-  <path stroke="#fafafa" stroke-width="2" stroke-linecap="round" fill="none" d="m12 17 3-5 3 4 3-8"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AdsForecast"><defs><linearGradient id="af" x1="13" y1="54" x2="53" y2="10" gradientUnits="userSpaceOnUse"><stop stop-color="#6D5EF4"/><stop offset=".55" stop-color="#7B68F6"/><stop offset="1" stop-color="#655CF0"/></linearGradient><linearGradient id="tip" x1="45" y1="29" x2="58" y2="38" gradientUnits="userSpaceOnUse"><stop stop-color="#FF6A59"/><stop offset="1" stop-color="#FF8064"/></linearGradient></defs><rect x="1" y="1" width="62" height="62" rx="16" fill="#111118"/><g transform="translate(7 6) scale(.78)"><path d="M8.7 51.7 26.5 13.6c1-2.2 2.9-3.4 5.3-3.4h22.7c2.8 0 4.3 2.8 2.8 5.1l-3.4 5.2c-1 1.6-2.4 2.3-4.3 2.3H39.2l3.1 7.1h10.2l-6 9.2h-.2l5.5 12.6c.9 2.1-.6 4.5-2.9 4.5h-5.5c-2.3 0-4.1-1.2-5-3.4L31 34.7l-8.3 18.2c-1 2.2-2.8 3.3-5.2 3.3h-5.9c-2.4 0-3.9-2.4-2.9-4.5Z" fill="url(#af)"/><path d="M42.3 29.9h13.9c1.8 0 2.8 1.9 1.8 3.4l-3.1 4.6c-.8 1.1-1.8 1.7-3.2 1.7h-5.2l-4.2-9.7Z" fill="url(#tip)"/></g></svg>

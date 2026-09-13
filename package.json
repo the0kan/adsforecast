@@ -1,16 +1,16 @@
 {
-  "name": "adprofit-platform",
-  "version": "0.2.0",
+  "name": "adsforecast-platform",
+  "version": "0.11.0",
   "private": true,
-  "description": "AdProfit — Meta Ads + e-commerce profit analytics (product demo)",
+  "description": "AdsForecast — profit-first Meta Ads analytics, AI decision support, billing and customer operations",
   "scripts": {
-    "setup": "npm install && cd backend && npm install",
-    "dev": "concurrently -k -n api,web -c blue,green \"npm run dev:api\" \"npm run dev:web\"",
-    "dev:api": "cd backend && npm run dev",
+    "setup": "npm install",
+    "dev": "npm run dev:web",
+    "backend:status": "npx supabase functions list && npx supabase migration list",
+    "backend:serve": "npx supabase functions serve --env-file supabase/.env.local",
+    "backend:db:push": "npx supabase db push",
+    "backend:deploy": "npx supabase functions deploy backend-health workspace-bootstrap account-center billing-center stripe-webhook support-center admin-console meta-start meta-callback meta-accounts meta-connect meta-connection meta-campaigns ai-analyze ai-insights --use-api --jobs 4",
     "dev:web": "npx --yes serve -l 5173 .",
-    "start:api": "cd backend && npm start"
-  },
-  "devDependencies": {
-    "concurrently": "^9.1.0"
+    "start:api": "npm run backend:serve"
   }
 }

@@ -1,10 +1,20 @@
 /**
- * AdProfit — client session layer (localStorage today; JWT / cookies later)
+ * AdsForecast — client session layer (localStorage today; JWT / cookies later)
  * @module auth
  */
 
-export const SESSION_STORAGE_KEY = "adprofit.session.v1";
-export const AUTH_REQUIRED_STORAGE_KEY = "adprofit.auth.required";
+export const SESSION_STORAGE_KEY = "adsforecast.session.v1";
+export const AUTH_REQUIRED_STORAGE_KEY = "adsforecast.auth.required";
+const LEGACY_STORAGE_PREFIX = ["ad", "profit"].join("");
+
+function readStorageWithMigration(key) {
+  const current = localStorage.getItem(key);
+  if (current != null) return current;
+  const legacyKey = key.replace(/^adsforecast/, LEGACY_STORAGE_PREFIX);
+  const legacy = localStorage.getItem(legacyKey);
+  if (legacy != null) localStorage.setItem(key, legacy);
+  return legacy;
+}
 
 /**
  * @typedef {object} Session
@@ -22,10 +32,14 @@ export const AUTH_REQUIRED_STORAGE_KEY = "adprofit.auth.required";
  */
 export function getSession() {
   try {
-    const raw = localStorage.getItem(SESSION_STORAGE_KEY);
+    const raw = readStorageWithMigration(SESSION_STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
     if (!parsed || typeof parsed.userId !== "string") return null;
+    if (parsed.expiresAt && new Date(parsed.expiresAt).getTime() < Date.now()) {
+      clearSession();
+      return null;
+    }
     return /** @type {Session} */ (parsed);
   } catch {
     return null;
@@ -45,6 +59,7 @@ export function setSession(session) {
 
 export function clearSession() {
   localStorage.removeItem(SESSION_STORAGE_KEY);
+  localStorage.removeItem(SESSION_STORAGE_KEY.replace(/^adsforecast/, LEGACY_STORAGE_PREFIX));
 }
 
 export function isAuthenticated() {
@@ -54,7 +69,7 @@ export function isAuthenticated() {
 /** When `"1"`, protected shells redirect to login if no session. Default off for static demos. */
 export function isAuthRequired() {
   try {
-    return localStorage.getItem(AUTH_REQUIRED_STORAGE_KEY) === "1";
+    return readStorageWithMigration(AUTH_REQUIRED_STORAGE_KEY) === "1";
   } catch {
     return false;
   }
@@ -133,12 +148,27 @@ export function signOutToLogin() {
 }
 
 /**
+ * Signs out Supabase session if configured, then clears local session.
+ * @returns {Promise<void>}
+ */
+export async function signOutEverywhere() {
+  try {
+    const { getSupabaseClient } = await import("./supabase.js");
+    const sb = await getSupabaseClient();
+    if (sb) await sb.auth.signOut();
+  } catch {
+    /* ignore */
+  }
+  clearSession();
+}
+
+/**
  * Only allow same-site HTML filenames after login (blocks protocol-relative and external redirects).
  * @param {string | null | undefined} next
- * @param {string} [fallback='dashboard.html']
+ * @param {string} [fallback='overview.html']
  * @returns {string}
  */
-export function sanitizeNextPageFilename(next, fallback = "dashboard.html") {
+export function sanitizeNextPageFilename(next, fallback = "overview.html") {
   if (!next || typeof next !== "string") return fallback;
   let s = next.trim();
   try {
@@ -193,7 +223,7 @@ export function validateDemoPassword(password, mode) {
   if (mode === "signup" && s.length < DEMO_SIGNUP_PASSWORD_MIN) {
     return {
       ok: false,
-      message: `Use at least ${DEMO_SIGNUP_PASSWORD_MIN} characters for this demo sign-up.`,
+      message: `Use at least ${DEMO_SIGNUP_PASSWORD_MIN} characters.`,
     };
   }
   return { ok: true };

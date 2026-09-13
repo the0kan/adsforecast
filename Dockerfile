@@ -1,4 +1,4 @@
-# API — build from repository root: docker build -t adprofit-api .
+# API — build from repository root: docker build -t adsforecast-api .
 FROM node:20-bookworm-slim
 
 WORKDIR /app

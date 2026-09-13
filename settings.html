@@ -3,72 +3,131 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AdProfit settings — profile, workspace, Meta Ads connection, billing, and session.">
-  <meta name="theme-color" content="#09090b">
-  <meta name="adprofit-api-base" content="https://adprofit.onrender.com">
-  <title>Settings — AdProfit</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="AdsForecast settings — profile, workspace, Meta connection, billing, and session controls.">
+  <meta name="theme-color" content="#08070d">
+  <meta name="adsforecast-api-base" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <title>Settings — AdsForecast</title>
+  <meta name="adsforecast-supabase-url" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-anon-key" content="sb_publishable__01tCxPjMTliQTxOHRdgyQ_DAPLrAJh">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="auth.css">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="product.css?v=7">
+  <link rel="stylesheet" href="launch.css?v=1">
 </head>
-<body class="page auth-page settings-page">
-  <header class="settings-topbar">
-    <div class="settings-topbar__inner">
-      <a class="site-logo" href="dashboard.html">AdProfit</a>
-      <nav class="settings-topbar__nav" aria-label="App">
-        <a class="settings-topbar__link" href="dashboard.html#overview">Dashboard</a>
-        <a class="settings-topbar__link settings-topbar__link--active" href="settings.html" aria-current="page">Settings</a>
+<body class="dashboard app-page account-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar" aria-label="Main navigation">
+      <div class="dashboard-sidebar__header"><a class="dashboard-logo app-logo-premium" href="overview.html" aria-label="Go to AdsForecast overview"><span class="app-logo-premium__mark" aria-hidden="true">AF</span><span>AdsForecast</span></a></div>
+      <nav class="dashboard-sidebar__nav" aria-label="Product">
+        <ul class="dashboard-nav">
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="overview" href="overview.html">Overview</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="campaigns" href="campaigns.html">Campaigns</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="profitability" href="profitability.html">Profitability</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="integrations" href="integrations.html">Integrations</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="insights" href="insights.html">AI Analyst</a></li>
+          <li class="dashboard-nav__item dashboard-nav__item--footer"><a class="dashboard-nav__link" data-app-nav="settings" href="settings.html">Settings</a></li>
+        </ul>
       </nav>
-    </div>
-  </header>
+    </aside>
 
-  <main class="auth-shell auth-shell--settings settings-main">
-    <div class="auth-card auth-card--settings settings-card">
-      <h1 class="auth-title">Settings</h1>
-      <p class="auth-lead">Manage your workspace preferences and integrations. Sensitive tokens never appear here — they stay encrypted on the server.</p>
-
-      <section class="settings-block" aria-labelledby="settings-profile-h">
-        <h2 class="settings-block__title" id="settings-profile-h">Profile</h2>
-        <p class="settings-block__text" id="settings-user">Signed in as: —</p>
-      </section>
-
-      <section class="settings-block" aria-labelledby="settings-workspace-h">
-        <h2 class="settings-block__title" id="settings-workspace-h">Workspace</h2>
-        <p class="settings-block__text" id="settings-workspace-info">Loading workspace…</p>
-        <p class="settings-block__hint">Workspace name and members are managed from the API. Multi-seat controls ship in a later release.</p>
-      </section>
-
-      <section class="settings-block" aria-labelledby="settings-meta-h">
-        <h2 class="settings-block__title" id="settings-meta-h">Connected Meta account</h2>
-        <p class="settings-block__text" id="settings-meta-connection">Checking connection…</p>
-        <p class="settings-block__hint">Use <strong>Reconnect</strong> if your session expired. Use <strong>Change account</strong> from the dashboard integrations panel to pick another ad account.</p>
-        <div class="settings-actions">
-          <a class="btn btn--primary" href="https://adprofit.onrender.com/v1/integrations/meta/start">Reconnect Meta Ads</a>
-          <a class="btn btn--secondary" href="dashboard.html#integrations">Change account</a>
+    <div class="dashboard-main">
+      <header class="dashboard-topbar">
+        <div class="dashboard-topbar__titles">
+          <div class="dashboard-topbar__title-row">
+            <h1 class="dashboard-topbar__title">Settings</h1>
+            <span class="dashboard-env-badge" id="dashboard-env-badge"></span>
+          </div>
+          <p class="dashboard-topbar__subtitle">Account, workspace, Meta connection and billing controls.</p>
         </div>
-      </section>
-
-      <section class="settings-block" aria-labelledby="settings-billing-h">
-        <h2 class="settings-block__title" id="settings-billing-h">Billing</h2>
-        <p class="settings-block__text">Stripe checkout is not enabled yet. When billing goes live, plans and invoices will appear here.</p>
-      </section>
-
-      <section class="settings-block" aria-labelledby="settings-plan-h">
-        <h2 class="settings-block__title" id="settings-plan-h">Plan</h2>
-        <p class="settings-block__text" id="settings-plan-info">Early access · workspace included</p>
-      </section>
-
-      <section class="settings-block" aria-labelledby="settings-security-h">
-        <h2 class="settings-block__title" id="settings-security-h">Security &amp; session</h2>
-        <p class="settings-block__hint">Session data is stored in this browser. Sign out on shared devices.</p>
-        <div class="settings-actions">
-          <button class="btn btn--primary" type="button" id="settings-sign-out">Sign out</button>
+        <div class="dashboard-topbar__actions">
+          <a class="btn btn--ghost" href="profile.html">Open profile</a>
+          <button class="dashboard-sign-out" type="button" id="dashboard-sign-out">Sign out</button>
+          <div class="dashboard-user"><span class="dashboard-user__avatar" aria-hidden="true"></span><a id="dashboard-profile-link" class="dashboard-user__name dashboard-user__name-link" href="profile.html">Profile</a></div>
         </div>
-      </section>
+      </header>
 
-      <p class="auth-footer"><a href="index.html">Marketing site</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
+      <main class="dashboard-content" id="main-content" tabindex="-1">
+        <section class="account-hero account-hero--settings account-hero--compact">
+          <div class="account-hero__copy">
+            <span class="account-kicker">Workspace control center</span>
+            <h2 class="account-hero__title">Tune the workspace around how you run paid growth.</h2>
+            <p class="account-hero__text">Keep identity, Meta connection, reporting defaults and session security in one clean place.</p>
+            <div class="account-hero__badges">
+              <span>Supabase Auth</span>
+              <span>Meta Ads OAuth</span>
+              <span>Database-backed preferences</span>
+            </div>
+          </div>
+          <div class="account-orbit" aria-hidden="true">
+            <div class="account-orbit__ring"></div>
+            <div class="account-orbit__card account-orbit__card--one"><small>Session</small><strong>Secure</strong></div>
+            <div class="account-orbit__card account-orbit__card--two"><small>Workspace</small><strong>Active</strong></div>
+            <div class="account-orbit__core">AF</div>
+          </div>
+        </section>
+
+        <div class="settings-workspace">
+          <nav class="settings-tabs" aria-label="Settings sections">
+            <button type="button" role="tab" aria-selected="true" aria-controls="settings-general" id="settings-tab-general" data-settings-tab="general">General</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="settings-data" id="settings-tab-data" data-settings-tab="data">Data sources</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="settings-notifications" id="settings-tab-notifications" data-settings-tab="notifications">Notifications</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="settings-security" id="settings-tab-security" data-settings-tab="security">Security</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="settings-billing" id="settings-tab-billing" data-settings-tab="billing">Billing</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="settings-privacy" id="settings-tab-privacy" data-settings-tab="privacy">Privacy</button>
+          </nav>
+
+          <div class="settings-panels">
+            <section class="settings-panel" id="settings-general" role="tabpanel" aria-labelledby="settings-tab-general" data-settings-panel="general">
+              <div class="settings-panel__header"><div><span class="app-section-kicker">Workspace defaults</span><h2>General settings</h2><p>Identity, reporting locale, and information density for this browser.</p></div><div class="settings-identity-summary"><strong id="settings-user">Loading account…</strong><span id="settings-workspace-info">Loading workspace…</span></div></div>
+              <article class="account-card account-card--wide">
+                <div class="app-pref-grid app-pref-grid--premium">
+                  <label class="app-pref-field" for="settings-display-name">Display name<input id="settings-display-name" type="text" maxlength="80" autocomplete="name" placeholder="Your preferred name" class="app-pref-input"></label>
+                  <label class="app-pref-field" for="settings-workspace-name">Workspace name<input id="settings-workspace-name" type="text" maxlength="100" autocomplete="organization" class="app-pref-input"></label>
+                  <label class="app-pref-field" for="settings-timezone">Timezone<select id="settings-timezone" class="app-pref-input"><option value="America/Los_Angeles">America/Los_Angeles</option><option value="America/New_York">America/New_York</option><option value="Europe/Warsaw">Europe/Warsaw</option><option value="Europe/Istanbul">Europe/Istanbul</option><option value="Europe/London">Europe/London</option></select></label>
+                  <label class="app-pref-field" for="settings-currency">Reporting currency<select id="settings-currency" class="app-pref-input"><option value="USD">USD</option><option value="EUR">EUR</option><option value="GBP">GBP</option><option value="TRY">TRY</option><option value="PLN">PLN</option></select></label>
+                  <label class="app-pref-field" for="settings-default-period">Default reporting period<select id="settings-default-period" class="app-pref-input"><option value="today">Today</option><option value="7d">Last 7 days</option><option value="30d">Last 30 days</option><option value="90d">Last 90 days</option></select></label>
+                  <label class="app-pref-field" for="settings-week-start">Week starts on<select id="settings-week-start" class="app-pref-input"><option value="1">Monday</option><option value="0">Sunday</option><option value="6">Saturday</option></select></label>
+                  <label class="app-pref-field" for="settings-retention">Data retention<select id="settings-retention" class="app-pref-input"><option value="90">90 days</option><option value="395">13 months</option><option value="730">24 months</option><option value="1825">5 years</option></select></label>
+                  <label class="app-pref-check app-pref-check--premium" for="settings-compact-mode"><input id="settings-compact-mode" type="checkbox"> Compact campaign table</label>
+                </div>
+                <div class="account-card__actions account-card__actions--footer"><button class="integration-card__btn integration-card__btn--primary" id="settings-save-preferences" type="button">Save general settings</button><p class="account-feedback" id="settings-save-feedback" aria-live="polite"></p></div>
+              </article>
+            </section>
+
+            <section class="settings-panel" id="settings-data" role="tabpanel" aria-labelledby="settings-tab-data" data-settings-panel="data" hidden>
+              <div class="settings-panel__header"><div><span class="app-section-kicker">Source management</span><h2>Data sources</h2><p>Review the live acquisition source that feeds campaign reporting.</p></div></div>
+              <article class="account-card account-card--highlight account-card--wide"><div class="account-card__head account-card__head--split"><div class="account-card__head-left"><span class="account-card__icon" aria-hidden="true">META</span><div><h3>Meta Ads connection</h3><p id="settings-meta-connection">Checking connection…</p></div></div><span class="account-status" id="settings-meta-status">Checking</span></div><div class="settings-data-boundary"><div><span>Metrics read</span><strong>Spend, purchase value, purchases, clicks, impressions</strong></div><div><span>Safety</span><strong>No budget changes are made by AdsForecast</strong></div></div><div class="account-card__actions"><button class="integration-card__btn integration-card__btn--primary" type="button" id="settings-meta-reconnect-link">Reconnect Meta Ads</button><a class="integration-card__btn" href="integrations.html">Manage account selection</a></div></article>
+            </section>
+
+            <section class="settings-panel" id="settings-notifications" role="tabpanel" aria-labelledby="settings-tab-notifications" data-settings-panel="notifications" hidden>
+              <div class="settings-panel__header"><div><span class="app-section-kicker">Attention controls</span><h2>Notifications</h2><p>Choose which product signals should be ready for future email and in-app delivery.</p></div></div>
+              <article class="account-card account-card--wide"><div class="settings-toggle-list"><label><span><strong>AI analysis ready</strong><small>Notify when a requested decision brief finishes.</small></span><input type="checkbox" id="settings-notify-analysis"></label><label><span><strong>Performance risk</strong><small>Notify when spend without purchases or negative contribution is detected.</small></span><input type="checkbox" id="settings-notify-risk"></label><label><span><strong>Weekly performance digest</strong><small>Receive a compact weekly overview of winners and risks.</small></span><input type="checkbox" id="settings-notify-weekly"></label><label><span><strong>Support replies</strong><small>Notify when the team responds to a workspace ticket.</small></span><input type="checkbox" id="settings-notify-support"></label><label><span><strong>Billing events</strong><small>Notify workspace owners about payment and subscription state.</small></span><input type="checkbox" id="settings-notify-billing"></label><label><span><strong>Product updates</strong><small>Occasional release and product education notes.</small></span><input type="checkbox" id="settings-notify-product"></label></div><p class="settings-delivery-note">Preferences are saved now. Transactional email delivery will remain disabled until the email provider is configured and tested.</p><div class="account-card__actions account-card__actions--footer"><button class="integration-card__btn integration-card__btn--primary" id="settings-save-notifications" type="button">Save notification preferences</button><p class="account-feedback" id="settings-notification-feedback" aria-live="polite"></p></div></article>
+            </section>
+
+            <section class="settings-panel" id="settings-security" role="tabpanel" aria-labelledby="settings-tab-security" data-settings-panel="security" hidden>
+              <div class="settings-panel__header"><div><span class="app-section-kicker">Account protection</span><h2>Security &amp; session</h2><p>Review the authentication boundary and control this browser session.</p></div></div>
+              <div class="settings-security-grid"><article class="account-card"><div class="account-card__head"><span class="account-card__icon" aria-hidden="true">AUTH</span><div><h3>Authentication</h3><p>Supabase Auth manages password, email confirmation, and token refresh.</p></div></div><div class="profile-detail-list" id="settings-session-details"></div></article><article class="account-card account-card--danger-soft"><div class="account-card__head"><span class="account-card__icon" aria-hidden="true">OUT</span><div><h3>End this session</h3><p>Sign out from Supabase and remove the local session mirror from this browser.</p></div></div><div class="account-card__actions"><button class="integration-card__btn integration-card__btn--danger" id="settings-sign-out" type="button">Sign out now</button><a class="integration-card__btn" href="profile.html">Open profile</a></div></article></div>
+              <article class="account-card account-card--danger-soft settings-reset-card"><div><h3>Reset local product preferences</h3><p>Removes display, notification, cost-model, and billing-draft preferences from this browser. Account and Meta data are not deleted.</p></div><button class="integration-card__btn integration-card__btn--danger" id="settings-reset-preferences" type="button">Reset local preferences</button></article>
+            </section>
+
+            <section class="settings-panel" id="settings-billing" role="tabpanel" aria-labelledby="settings-tab-billing" data-settings-panel="billing" hidden>
+              <div class="settings-panel__header"><div><span class="app-section-kicker">Commercial workspace</span><h2>Plans &amp; billing</h2><p>Review the selected checkout preference and compare monthly or annual plans.</p></div></div>
+              <article class="account-card account-card--wide settings-billing-card" id="settings-billing-summary"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--wide"></div></article>
+            </section>
+
+            <section class="settings-panel" id="settings-privacy" role="tabpanel" aria-labelledby="settings-tab-privacy" data-settings-panel="privacy" hidden>
+              <div class="settings-panel__header"><div><span class="app-section-kicker">Data governance</span><h2>Privacy &amp; data boundaries</h2><p>Understand what AdsForecast stores and how to request account support.</p></div></div>
+              <div class="settings-security-grid"><article class="account-card"><div class="account-card__head"><span class="account-card__icon">DATA</span><div><h3>Workspace records</h3><p>Profile, settings, Meta connection metadata, analysis history, support tickets and verified billing state are tenant-scoped.</p></div></div><div class="profile-detail-list"><div class="profile-detail-row"><span>Meta access token</span><strong>Encrypted server-side</strong></div><div class="profile-detail-row"><span>Card data</span><strong>Handled by Stripe only</strong></div><div class="profile-detail-row"><span>AI execution</span><strong>Advisory; no campaign mutation</strong></div></div></article><article class="account-card"><div class="account-card__head"><span class="account-card__icon">REQ</span><div><h3>Privacy requests</h3><p>Use the documented request route for export or deletion questions.</p></div></div><div class="account-card__actions"><a class="integration-card__btn" href="privacy.html">Privacy policy</a><a class="integration-card__btn" href="data-deletion.html">Data deletion</a><a class="integration-card__btn integration-card__btn--primary" href="support.html">Open privacy ticket</a></div></article></div>
+            </section>
+          </div>
+        </div>
+      </main>
     </div>
-  </main>
-  <script type="module" src="settings.js"></script>
+  </div>
+  <script src="ui.js?v=7" defer></script>
+  <script type="module" src="settings.js?v=9"></script>
 </body>
 </html>

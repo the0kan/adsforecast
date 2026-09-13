@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="AdsForecast AI Analyst — evidence-based recommendations from live Meta campaign performance.">
+  <meta name="theme-color" content="#08070d">
+  <meta name="adsforecast-api-base" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <title>Insights — AdsForecast</title>
+  <meta name="adsforecast-supabase-url" content="https://qlwaxfkmeukhhuwwgllk.supabase.co">
+  <meta name="adsforecast-supabase-anon-key" content="sb_publishable__01tCxPjMTliQTxOHRdgyQ_DAPLrAJh">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="product.css?v=7">
+  <link rel="stylesheet" href="launch.css?v=1">
+</head>
+<body class="dashboard app-page app-page--insights">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar" aria-label="Main navigation">
+      <div class="dashboard-sidebar__header">
+        <a class="dashboard-logo app-logo" href="overview.html" aria-label="Go to AdsForecast overview"><span class="app-logo__mark">AF</span><span>AdsForecast</span></a>
+      </div>
+      <nav class="dashboard-sidebar__nav" aria-label="Product">
+        <ul class="dashboard-nav">
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="overview" href="overview.html">Overview</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="campaigns" href="campaigns.html">Campaigns</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="profitability" href="profitability.html">Profitability</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="integrations" href="integrations.html">Integrations</a></li>
+          <li class="dashboard-nav__item"><a class="dashboard-nav__link" data-app-nav="insights" href="insights.html">AI Analyst</a></li>
+          <li class="dashboard-nav__item dashboard-nav__item--footer"><a class="dashboard-nav__link" data-app-nav="settings" href="settings.html">Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="dashboard-topbar">
+        <div class="dashboard-topbar__titles">
+          <div class="dashboard-topbar__title-row">
+            <h1 class="dashboard-topbar__title">AI Analyst</h1>
+            <span class="dashboard-env-badge" id="dashboard-env-badge"></span>
+          </div>
+          <p class="dashboard-topbar__subtitle" id="insights-live-msg">Loading recommendation engine…</p>
+        </div>
+        <div class="dashboard-topbar__actions">
+          <button class="btn btn--primary" type="button" id="insights-refresh-btn">Run AI analysis</button>
+          <button class="dashboard-sign-out" type="button" id="dashboard-sign-out">Sign out</button>
+          <div class="dashboard-user">
+            <span class="dashboard-user__avatar" aria-hidden="true"></span>
+            <a id="dashboard-profile-link" class="dashboard-user__name dashboard-user__name-link" href="profile.html">Profile</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-content" id="main-content" tabindex="-1">
+        <section class="insights-hero app-hero-card ai-analyst-hero">
+          <div class="app-hero-card__copy">
+            <div class="ai-hero-meta"><span class="app-hero-eyebrow">Evidence-led campaign intelligence</span><span class="ai-provider-badge" id="ai-provider-badge">Loading…</span></div>
+            <h2 class="app-hero-title">A complete analyst workspace for the next budget decision.</h2>
+            <p class="app-hero-text" id="ai-executive-summary">Loading the latest analysis…</p>
+            <div class="ai-safety-note"><span aria-hidden="true">✓</span><p><strong>Human approval stays in control.</strong> AdsForecast reads performance evidence and recommends actions; it never changes campaigns or budgets automatically.</p></div>
+          </div>
+          <div class="ai-run-card" role="region" aria-label="Latest analysis status">
+            <div class="ai-run-card__head"><span class="app-section-kicker">Latest run</span><span class="status-pill status-pill--neutral" id="ai-run-status">Checking</span></div>
+            <dl>
+              <div><dt>Meta account</dt><dd id="ai-scope-account">Resolving…</dd></div>
+              <div><dt>Evidence window</dt><dd id="ai-scope-window">Last 30 days</dd></div>
+              <div><dt>Completed</dt><dd id="ai-scope-completed">—</dd></div>
+              <div><dt>Campaigns analyzed</dt><dd id="ai-scope-campaigns">—</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <p class="auth-error ai-analysis-error" id="ai-analysis-error" role="alert" aria-live="polite"></p>
+
+        <section class="insights-summary-grid ai-summary-grid" aria-label="Analysis summary">
+          <article class="metric-card"><h3 class="metric-card__label">Priority insights</h3><p class="metric-card__value" id="insights-count">—</p><p class="metric-card__hint">Ranked by impact and urgency</p></article>
+          <article class="metric-card"><h3 class="metric-card__label">Scale candidates</h3><p class="metric-card__value" id="insights-scale-count">—</p><p class="metric-card__hint">Strong efficiency signals</p></article>
+          <article class="metric-card"><h3 class="metric-card__label">Risk warnings</h3><p class="metric-card__value" id="insights-risk-count">—</p><p class="metric-card__hint">Spend leakage and weak ROAS</p></article>
+          <article class="metric-card"><h3 class="metric-card__label">Average confidence</h3><p class="metric-card__value" id="insights-confidence">—</p><p class="metric-card__hint">Across the visible recommendation set</p></article>
+          <article class="metric-card"><h3 class="metric-card__label">Modeled profit</h3><p class="metric-card__value" id="ai-portfolio-profit">—</p><p class="metric-card__hint" id="ai-portfolio-margin">Current cost model</p></article>
+          <article class="metric-card"><h3 class="metric-card__label">Risk spend</h3><p class="metric-card__value" id="ai-portfolio-risk">—</p><p class="metric-card__hint">Repair and stop-loss lanes</p></article>
+        </section>
+
+        <section class="dashboard-section ai-layer-console" aria-labelledby="ai-layer-title">
+          <div class="launch-section-head"><div><span class="app-section-kicker">Five-layer decision system</span><h2 id="ai-layer-title">From executive posture to measurable guardrails</h2><p>Move through each layer to understand the portfolio, diagnose the signal and decide what should happen next.</p></div><span class="ai-layer-version">Analysis payload · v1</span></div>
+          <div class="ai-layer-tabs" id="ai-layer-tabs" role="tablist" aria-label="Analysis layers"></div>
+          <div class="ai-layer-detail" id="ai-layer-detail"><p class="dashboard-empty">Run a new analysis to generate the five-layer decision system.</p></div>
+        </section>
+
+        <section class="dashboard-section ai-scenario-panel" aria-labelledby="ai-scenario-title"><div class="launch-section-head"><div><span class="app-section-kicker">Bounded scenarios</span><h2 id="ai-scenario-title">Explore the next move without pretending to forecast</h2><p>Each scenario states the change, expected operating effect and a rollback guardrail.</p></div></div><div class="ai-scenario-grid" id="ai-scenario-grid"><p class="dashboard-empty">Scenarios appear with the latest five-layer analysis.</p></div></section>
+
+        <section class="ai-portfolio-grid" aria-label="Portfolio evidence diagnostics">
+          <article class="dashboard-section ai-portfolio-panel">
+            <div class="dashboard-section__header"><span class="app-section-kicker">Portfolio evidence</span><h2 class="dashboard-section__title">What the analyst is reading</h2><p class="dashboard-section__description">Live Meta delivery and purchase-value evidence, reconciled with your saved profitability assumptions.</p></div>
+            <dl class="ai-diagnostic-grid" id="ai-diagnostic-grid"></dl>
+          </article>
+          <article class="dashboard-section ai-decision-brief">
+            <div class="dashboard-section__header"><span class="app-section-kicker">Decision posture</span><h2 class="dashboard-section__title">Portfolio action mix</h2><p class="dashboard-section__description">Every campaign is placed in a review lane before AI recommendations are considered.</p></div>
+            <div class="ai-decision-mix" id="ai-decision-mix"></div>
+          </article>
+        </section>
+
+        <section class="ai-workspace">
+          <aside class="dashboard-section ai-control-panel" aria-label="AI recommendation controls">
+            <div class="dashboard-section__header"><span class="app-section-kicker">View controls</span><h2 class="dashboard-section__title">Shape the decision queue</h2><p class="dashboard-section__description">These controls filter the generated brief without changing campaign data.</p></div>
+            <div class="app-pref-field"><label for="ai-focus-select">Analysis lens</label><select class="app-pref-input" id="ai-focus-select"><option value="all">All recommendations</option><option value="scale">Growth opportunities</option><option value="risk">Risk and repair</option><option value="efficiency">Efficiency actions</option><option value="hold">Hold and monitor</option></select></div>
+            <div class="app-pref-field"><label for="ai-period-select">Evidence window</label><select class="app-pref-input" id="ai-period-select"><option value="today">Today</option><option value="7d">Last 7 days</option><option value="30d" selected>Last 30 days</option><option value="90d">Last 90 days</option></select></div>
+            <div class="ai-range-field"><span><label for="ai-confidence-range">Minimum confidence</label><output id="ai-confidence-output" for="ai-confidence-range">0%</output></span><input id="ai-confidence-range" type="range" min="0" max="95" step="5" value="0"></div>
+            <div class="ai-control-panel__actions"><button class="btn btn--ghost" type="button" id="ai-export-btn">Export brief</button><button class="btn btn--ghost" type="button" id="ai-reset-controls">Reset view</button></div>
+            <div class="ai-evidence-boundary"><span>Analysis contract</span><dl><div><dt>Source</dt><dd id="ai-boundary-source">Live Meta metrics</dd></div><div><dt>Profit model</dt><dd id="ai-boundary-model">Loading…</dd></div><div><dt>Execution</dt><dd>Advisory only</dd></div><div><dt>Automatic changes</dt><dd>Disabled</dd></div></dl></div>
+          </aside>
+          <section class="dashboard-section insights-board">
+            <div class="dashboard-section__header insights-board__header">
+              <div>
+                <span class="app-section-kicker">AI-generated recommendation queue</span>
+                <h3 class="dashboard-section__title">Actionable recommendations</h3>
+                <p class="dashboard-section__description" id="ai-result-summary">Review the highest-signal opportunities and warnings from your current dataset.</p>
+              </div>
+            </div>
+            <ul class="insight-grid insight-grid--premium" id="insights-list"><li class="dashboard-empty">Loading insights…</li></ul>
+          </section>
+        </section>
+
+        <section class="ai-operations-grid" aria-label="Analysis operations and governance">
+          <article class="dashboard-section ai-history-panel">
+            <div class="dashboard-section__header"><span class="app-section-kicker">Analysis operations</span><h2 class="dashboard-section__title">Recent run history</h2><p class="dashboard-section__description">A bounded audit trail of completed, running, and failed analysis requests.</p></div>
+            <ol class="ai-history-list" id="ai-history-list"><li>Loading run history…</li></ol>
+          </article>
+          <article class="dashboard-section ai-governance-panel">
+            <div class="dashboard-section__header"><span class="app-section-kicker">Model governance</span><h2 class="dashboard-section__title">Trust boundary</h2><p class="dashboard-section__description">Recommendations are constrained to campaign evidence and reviewed by a person before execution.</p></div>
+            <ul class="ai-governance-list">
+              <li><span aria-hidden="true">01</span><div><strong>Untrusted names stay data</strong><p>Campaign names are treated as evidence labels, never as instructions to the model.</p></div></li>
+              <li><span aria-hidden="true">02</span><div><strong>Confidence is visible</strong><p>Every recommendation carries a confidence score and numeric evidence.</p></div></li>
+              <li><span aria-hidden="true">03</span><div><strong>No automatic execution</strong><p>AdsForecast does not edit budgets, ads, audiences, or campaign status.</p></div></li>
+            </ul>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="ui.js?v=7" defer></script>
+  <script type="module" src="insights.js?v=11"></script>
+</body>
+</html>

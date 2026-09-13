@@ -1,0 +1,65 @@
+AdsForecast final premium rebuild upload checklist
+
+Upload all files/folders in this package to public_html.
+Do NOT upload backend/.env or node_modules.
+
+Important pages:
+- index.html
+- product.html
+- how-it-works.html
+- pricing.html
+- faq.html
+- login.html
+- signup.html
+- overview.html
+- campaigns.html
+- profitability.html
+- integrations.html
+- insights.html
+- settings.html
+- profile.html
+- control-center.html
+- privacy.html
+- terms.html
+- data-deletion.html
+
+Important styles:
+- marketing.css
+- product.css
+- styles.css
+- auth.css
+- dashboard.css
+- app.css
+- admin.css
+
+Important JS:
+- marketing.js
+- ui.js
+- config.js
+- supabase.js
+- auth.js
+- login.js
+- signup.js
+- app-auth.js
+- app-meta.js
+- app-data.js
+- app-shell.js
+- overview.js
+- campaigns.js
+- profitability.js
+- integrations.js
+- insights.js
+- settings.js
+- profile.js
+- control-center.js
+- data.js
+- metrics.js
+- insights-engine.js
+- chart.js
+
+After upload:
+1. Hard refresh with Cmd + Shift + R.
+2. Test index.html and its Product, How it works, Pricing, and FAQ links.
+3. Test login.html.
+4. Test overview.html.
+5. Test integrations.html -> Connect Meta Ads.
