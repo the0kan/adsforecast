@@ -20,10 +20,10 @@
       "purpose": "any maskable"
     },
     {
-      "src": "/assets/favicon.svg",
+      "src": "/assets/favicon.svg?v=20260913",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
