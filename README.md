@@ -1,92 +1,154 @@
-# AdsForecast
+<p align="center">
+  <img src="assets/logo-horizontal.svg" alt="AdsForecast" width="280">
+</p>
 
-AdsForecast is a profit-first Meta Ads operating workspace. It combines live campaign evidence, a saved contribution model, five-layer AI decision support, workspace settings, customer support, subscription readiness and a database-backed platform admin console.
+<p align="center">
+  Profit intelligence and evidence-led AI for Meta Ads.
+</p>
 
-## Current architecture
+<p align="center">
+  <a href="https://github.com/the0kan/adsforecast/actions/workflows/ci.yml"><img src="https://github.com/the0kan/adsforecast/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-8B7CF6.svg" alt="MIT license"></a>
+  <a href="https://adsforecast.com"><img src="https://img.shields.io/badge/live-adsforecast.com-55DFC0.svg" alt="Live product"></a>
+  <img src="https://img.shields.io/badge/status-private_beta-FF755F.svg" alt="Private beta">
+</p>
 
-- Frontend: responsive static HTML, CSS and ES modules.
-- Identity and session: Supabase Auth.
-- Source of truth: Supabase PostgreSQL.
-- Server logic: bounded Supabase Edge Functions.
-- Acquisition data: Meta Marketing API through OAuth; tokens are encrypted server-side.
-- AI: Gemini or OpenAI when configured, with a deterministic rules fallback and explicit evidence boundaries.
-- Billing: Stripe-ready checkout, portal and signed webhook flow. Paid access is never inferred from a browser action.
-- Operations: tenant-scoped support tickets plus explicit platform administrator roles and audit logs.
+<p align="center">
+  <a href="https://adsforecast.com">Live product</a> ·
+  <a href="docs/launch-checklist.md">Launch checklist</a> ·
+  <a href="CONTRIBUTING.md">Contributing</a> ·
+  <a href="SECURITY.md">Security</a>
+</p>
 
-The old Express/Prisma implementation under `backend-old/` is retained only as historical reference. It is not the production path.
+![AdsForecast — know which campaigns deserve the next dollar](assets/adsforecast-social-card.png)
 
-## Product routes
+AdsForecast is a profit-first operating workspace for Meta Ads. It combines campaign evidence, contribution-margin modelling, AI-assisted decisions, workspace operations, billing readiness and customer support in one tenant-aware product.
 
-- `index.html`: marketing and pricing.
-- `login.html`, `signup.html`: Supabase authentication.
-- `overview.html`: portfolio summary and decision queue.
-- `campaigns.html`: daily, weekly, monthly, 90-day and custom campaign reporting.
-- `profitability.html`: contribution model and break-even analysis.
-- `insights.html`: five-layer AI Analyst, scenarios, recommendation queue and run history.
-- `integrations.html`: Meta connection and provider boundaries.
-- `profile.html`, `settings.html`: customer and workspace controls.
-- `billing.html`: plan comparison, checkout draft and Stripe activation boundary.
-- `support.html`: customer ticket queue and replies.
-- `control-center.html`: platform-only customer, workspace, plan, subscription, ticket, integration, system and audit operations.
+> [!IMPORTANT]
+> The product is ready for private-beta operation. Public paid launch remains gated until Stripe price mappings, signed webhooks and the Customer Portal have been verified in both test and live modes.
 
-Append `?demo=1` only for the explicit sample workspace. Demo mode is visually labelled, makes no Supabase data request and never appears as live customer data.
+## What it does
 
-## Local development
+- Turns campaign metrics into contribution-margin and break-even decisions.
+- Organizes daily, weekly, monthly, 90-day and custom reporting views.
+- Provides a five-layer AI analyst with deterministic fallback behaviour.
+- Keeps Meta OAuth tokens encrypted and outside browser storage.
+- Separates customer workspaces from platform administration.
+- Supports an explicitly labelled, network-isolated demo workspace via `?demo=1`.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    Browser[Static web client] --> Auth[Supabase Auth]
+    Browser --> Functions[Supabase Edge Functions]
+    Functions --> Database[(Supabase Postgres)]
+    Functions --> Meta[Meta Marketing API]
+    Functions --> AI[Gemini / OpenAI]
+    Functions --> Stripe[Stripe]
+```
+
+| Layer | Responsibility |
+| --- | --- |
+| Web client | Responsive HTML, CSS and ES modules hosted as a static site |
+| Identity | Supabase Auth and explicit bearer sessions |
+| Application boundary | Bounded Supabase Edge Functions with per-request authorization |
+| Source of truth | Supabase Postgres with workspace tenancy and row-level security |
+| Integrations | Meta OAuth, AI providers and Stripe; provider secrets remain server-side |
+| Operations | Support tickets, platform roles, readiness checks and audit logs |
+
+The browser receives only publishable Supabase configuration. Service-role credentials, provider keys, OAuth tokens and webhook secrets belong exclusively in Edge Function secrets.
+
+## Quick start
+
+### Prerequisites
+
+- Node.js 20 or newer
+- Python 3.11 or newer for the local server and browser quality suite
 
 ```bash
+git clone https://github.com/the0kan/adsforecast.git
+cd adsforecast
+npm ci
 npm run dev
 ```
 
-Open `http://localhost:5173/index.html`. The included `serve.json` preserves `.html` routes and query parameters so demo and post-auth redirects behave like production.
+Open `http://localhost:5173/index.html`. To explore the sample workspace without contacting Supabase, open `http://localhost:5173/overview.html?demo=1`.
+
+### Run the complete quality suite
+
+```bash
+python3 -m pip install -r requirements-dev.txt
+python3 -m playwright install chromium
+npm run verify
+```
+
+The suite checks JavaScript syntax, public marketing routes, authentication flows, product interactions, responsive layouts, accessibility basics and the platform control plane. CI runs the same command on every pull request and every push to `main`.
+
+## Product routes
+
+| Area | Routes |
+| --- | --- |
+| Marketing | `index.html`, `product.html`, `how-it-works.html`, `pricing.html`, `faq.html` |
+| Identity | `login.html`, `signup.html` |
+| Product | `overview.html`, `campaigns.html`, `profitability.html`, `insights.html` |
+| Workspace | `integrations.html`, `profile.html`, `settings.html`, `billing.html`, `support.html` |
+| Platform operations | `control-center.html` |
 
 ## Supabase workflow
 
+Link the intended project before applying or deploying anything:
+
 ```bash
-npx supabase link --project-ref qlwaxfkmeukhhuwwgllk
-npx supabase db push --linked --dry-run --skip-vault
-npx supabase db push --linked --skip-vault
+npx supabase link --project-ref YOUR_PROJECT_REF
+npx supabase db push --linked --dry-run
+npx supabase db push --linked
 npm run backend:deploy
 ```
 
 Required server secrets depend on the enabled providers:
 
-- Core: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `TOKEN_ENCRYPTION_SECRET`, `FRONTEND_URL`.
-- Meta: `META_APP_ID`, `META_APP_SECRET`, `META_REDIRECT_URI`, `META_API_VERSION`, `META_SCOPES`, `OAUTH_STATE_SECRET`.
-- AI: `GEMINI_API_KEY` and optional `GEMINI_MODEL`, or `OPENAI_API_KEY` and optional `OPENAI_MODEL`.
-- Stripe activation: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_MODE`, plus the product and monthly/annual price IDs saved from the admin plan editor.
+- Core: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `TOKEN_ENCRYPTION_SECRET`, `FRONTEND_URL`
+- Meta: `META_APP_ID`, `META_APP_SECRET`, `META_REDIRECT_URI`, `META_API_VERSION`, `META_SCOPES`, `OAUTH_STATE_SECRET`
+- AI: `GEMINI_API_KEY` and optional `GEMINI_MODEL`, or `OPENAI_API_KEY` and optional `OPENAI_MODEL`
+- Stripe: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_MODE`, plus product and price IDs configured in the admin plan editor
 
-Never put provider secrets, service-role keys, Meta tokens or Stripe secrets in browser code.
+Never commit provider secrets, service-role keys, Meta tokens or Stripe credentials. See [Security](SECURITY.md) and the [Stripe activation runbook](docs/stripe-activation-runbook.md) before enabling paid access.
 
-## Verification
-
-Use the bundled Codex Python runtime when the system Python does not include Playwright.
-
-```bash
-python3 tests/marketing_e2e.py
-python3 tests/product_intelligence_e2e.py
-python3 tests/launch_control_plane_e2e.py
-python3 scripts/data_integrity_audit.py
-python3 scripts/product_quality_audit.py
-python3 scripts/product_upgrade_audit.py
-python3 scripts/auth_quality_audit.py
-python3 scripts/ui_audit.py
-```
-
-Database and deployment checks:
+For database or Edge Function changes, also verify the linked backend:
 
 ```bash
 npx supabase db lint --linked --level error
 npx supabase migration list --linked
-npx supabase functions list --project-ref qlwaxfkmeukhhuwwgllk
+npx supabase functions list
 ```
 
-## Launch documents
+## Repository map
+
+```text
+assets/                 Brand and social assets
+docs/                   Operations, launch and architecture documentation
+scripts/                Browser audits and repository verification
+specs/                  Product and launch-readiness specifications
+supabase/functions/     Edge Functions and shared server modules
+supabase/migrations/    Versioned database changes and RLS policies
+tests/                  End-to-end product checks
+*.html, *.css, *.js     Static application and marketing experience
+```
+
+## Documentation
 
 - [Launch checklist](docs/launch-checklist.md)
 - [Stripe activation runbook](docs/stripe-activation-runbook.md)
 - [Admin operations](docs/admin-operations.md)
-- [Architecture decision](docs/adr/0001_launch_architecture.md)
+- [Architecture decision record](docs/adr/0001_launch_architecture.md)
 - [Reverse-engineered product specification](specs/adsforecast_reverse_spec.md)
 - [Launch-readiness design](specs/launch_readiness_design.md)
+- [Brand system](BRAND.md)
+- [Changelog](CHANGELOG.md)
 
-The application can operate in private beta without Stripe. Public paid launch remains intentionally gated until Stripe keys, price mappings, webhook delivery and Customer Portal are configured and verified in test mode, then live mode.
+## Contributing and license
+
+Small, focused changes are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md), keep trust boundaries intact and run `npm run verify` before opening a pull request.
+
+AdsForecast is available under the [MIT License](LICENSE).

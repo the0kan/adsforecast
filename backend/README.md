@@ -1,6 +1,6 @@
 # AdsForecast backend (Supabase-only)
 
-This directory documents the **Supabase-only** backend: **Postgres** (migrations under `../supabase/migrations/`) and **Edge Functions** (under `../supabase/functions/`). The legacy Node backend lives in `backend-old/` and is **not** used or referenced here.
+This directory documents the **Supabase-only** backend: **Postgres** (migrations under `../supabase/migrations/`) and **Edge Functions** (under `../supabase/functions/`). Superseded Node/Express implementation files are retained only in Git history; they are not part of the current runtime.
 
 ## Architecture
 
@@ -20,17 +20,10 @@ The canonical v2 schema is created by migration `20260428140000_v2_clean_supabas
 
 ## Edge Functions
 
-Deploy each function (from repo root):
+Deploy the complete function set from the repository root:
 
 ```bash
-npx supabase functions deploy backend-health
-npx supabase functions deploy workspace-bootstrap
-npx supabase functions deploy meta-start
-npx supabase functions deploy meta-callback
-npx supabase functions deploy meta-accounts
-npx supabase functions deploy meta-connect
-npx supabase functions deploy meta-connection
-npx supabase functions deploy meta-campaigns
+npm run backend:deploy
 ```
 
 Public health check (returns no table contents or secrets):
@@ -65,7 +58,7 @@ Functions answer **OPTIONS** with **204** and allow browser origins because auth
 ## Manual test sequence
 
 1. Run `npx supabase db push` on a linked project (or apply the migration in the SQL editor).
-2. Deploy all seven functions with the commands above; set secrets.
+2. Deploy the function set with the command above; set secrets.
 3. In the Meta Developer app, confirm **Valid OAuth Redirect URIs** include your `META_REDIRECT_URI`.
 4. Sign up or sign in on the live frontend; confirm **POST** `workspace-bootstrap` returns **200** and JSON includes `workspace.id` (string).
 5. On **integrations**, click **Connect Meta Ads**; confirm **GET** `meta-start` returns JSON with `authUrl` starting with `https://www.facebook.com/`.

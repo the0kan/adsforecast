@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Replaced the obsolete Prisma CI job with the repository's real browser and quality suite.
+- Added reproducible local verification, pinned development tooling and CI failure artifacts.
+- Added contributor guidance, security reporting, issue templates, ownership and dependency updates.
+- Reworked the repository landing page around product value, architecture, trust boundaries and onboarding.
+- Removed superseded Express/Docker artifacts and duplicate planning documents from the repository root.
+
 ## 0.11.0 — 2026-08-31
 
 - Split the public marketing experience into focused `Product`, `How it works`, `Pricing`, and `FAQ` pages.

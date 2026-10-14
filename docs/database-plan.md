@@ -1,4 +1,7 @@
-# AdsForecast — database plan (PostgreSQL, v0)
+# AdsForecast — legacy database plan (PostgreSQL, v0)
+
+> [!WARNING]
+> Historical planning document. Versioned Supabase migrations under `supabase/migrations/` are the current database source of truth.
 
 Planning artifact. Revise after legal review (PII, retention) and first integration spikes.
 

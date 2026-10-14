@@ -793,7 +793,7 @@ body.marketing-page {
 
 .site-nav { gap: 8px; }
 .site-nav a {
-  min-height: 42px;
+  min-height: 44px;
   padding-inline: 13px;
   border-radius: 999px;
   color: #b9b5c3;
@@ -881,7 +881,7 @@ body.marketing-page {
 }
 .home-hero h1 {
   max-width: 720px;
-  font-size: clamp(3.35rem,5.3vw,4.8rem);
+  font-size: clamp(3.35rem,4.7vw,4.25rem);
   font-weight: 600;
   letter-spacing: -.058em;
   line-height: .99;

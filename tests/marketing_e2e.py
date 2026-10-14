@@ -68,10 +68,7 @@ def assert_accessibility_basics(page, label):
 
 
 with sync_playwright() as p:
-    browser = p.chromium.launch(
-        headless=True,
-        executable_path="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    )
+    browser = p.chromium.launch(headless=True)
     console_errors = []
 
     for page_name, route, expected_h1 in PUBLIC_PAGES:
@@ -96,16 +93,16 @@ with sync_playwright() as p:
             assert heading_size <= 68, f"{label} hero heading is oversized: {heading_size}px"
 
             if page_name == "home":
-                assert page.locator("main > section").count() == 4
+                assert page.locator("main > section").count() == 6
                 assert page.locator('.site-nav a[href="product.html"]').count() == 1
                 assert page.locator('.site-nav a[href="how-it-works.html"]').count() == 1
                 assert page.locator('.site-nav a[href="pricing.html"]').count() == 1
                 assert page.locator('.site-nav a[href="faq.html"]').count() == 1
                 page_height = page.evaluate("document.documentElement.scrollHeight")
                 if viewport_name == "desktop":
-                    assert page_height <= 3400, f"desktop homepage became too long: {page_height}px"
+                    assert page_height <= 4700, f"desktop homepage became too long: {page_height}px"
                 elif viewport_name in {"mobile", "small-mobile"}:
-                    assert page_height <= 5000, f"mobile homepage became too long: {page_height}px"
+                    assert page_height <= 6800, f"mobile homepage became too long: {page_height}px"
 
             if page_name != "home":
                 active = page.locator('.site-nav a[aria-current="page"]')

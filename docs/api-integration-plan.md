@@ -1,4 +1,7 @@
-# AdsForecast — API integration plan (v0)
+# AdsForecast — legacy API integration plan (v0)
+
+> [!WARNING]
+> Historical planning document. Current provider integrations are implemented as Supabase Edge Functions under `supabase/functions/`.
 
 Planning document for connecting Meta Ads, WooCommerce, and Shopify. Verify endpoints, scopes, and API versions against official docs before implementation.
 

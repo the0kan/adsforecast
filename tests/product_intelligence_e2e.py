@@ -32,7 +32,9 @@ with sync_playwright() as playwright:
     assert desktop.locator("#campaign-allocation-list .campaign-allocation-row").count() > 0
     assert desktop.locator("#campaign-ai-list li").count() == 3
     assert "Sample Meta dataset" in desktop.locator("#campaign-scope-source").inner_text()
-    assert "Sample Meta account" in desktop.locator(".app-sidebar-status").inner_text()
+    sidebar_status = desktop.locator(".app-sidebar-status").inner_text()
+    assert "Sample workspace" in sidebar_status
+    assert "no live sync" in sidebar_status
 
     desktop.locator("#campaign-filter-select").select_option("strong")
     assert "Showing" in desktop.locator("#campaign-result-count").inner_text()

@@ -1,4 +1,7 @@
-# AdsForecast — backend plan (v0)
+# AdsForecast — legacy backend plan (v0)
+
+> [!WARNING]
+> Historical planning document. The current production boundary is Supabase Postgres plus Edge Functions; see the root `README.md`.
 
 Planning-only document. No implementation commitment; revise as product and compliance requirements firm up.
 

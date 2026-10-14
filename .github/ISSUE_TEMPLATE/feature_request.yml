@@ -1,0 +1,29 @@
+name: Feature request
+description: Propose a focused product or engineering improvement.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user or operational problem should be solved?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: Describe the result rather than a specific implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or examples
+      description: Add relevant workflows, screenshots or references without customer data.
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Constraints and trade-offs
+      description: Note compatibility, security, migration or operational considerations.

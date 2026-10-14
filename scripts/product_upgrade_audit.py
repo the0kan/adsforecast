@@ -1,10 +1,11 @@
 import json
+import os
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
 
-BASE = "http://127.0.0.1:5173"
+BASE = os.environ.get("UI_AUDIT_BASE", "http://127.0.0.1:5173").rstrip("/")
 OUT = Path("artifacts/product-upgrade-local")
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -79,7 +80,7 @@ def main():
                 report["pages"].append(entry)
                 if metrics["overflow"]:
                     report["failures"].append(f"{page_name}/{viewport_name}: horizontal overflow {metrics['scrollWidth']} > {metrics['viewportWidth']}")
-                if "Plus Jakarta Sans" not in metrics["fontFamily"]:
+                if "Manrope" not in metrics["fontFamily"]:
                     report["failures"].append(f"{page_name}/{viewport_name}: product font missing")
                 if metrics["navLinks"] != 9:
                     report["failures"].append(f"{page_name}/{viewport_name}: expected 9 navigation destinations, found {metrics['navLinks']}")

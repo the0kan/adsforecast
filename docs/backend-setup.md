@@ -1,4 +1,7 @@
-# Backend setup (Phase 1)
+# Legacy backend setup (Phase 1)
+
+> [!WARNING]
+> Historical reference only. AdsForecast now uses Supabase Postgres and Edge Functions; follow the root `README.md` and `backend/README.md` for the current architecture.
 
 Stack: **Node.js**, **Express**, **PostgreSQL**, **Prisma**, **JWT** (access tokens), **bcrypt** (passwords). Production commonly uses **Neon** (or Supabase / Render / Railway) for Postgres — set `DATABASE_URL` accordingly.
 

@@ -54,9 +54,13 @@ with sync_playwright() as pw:
     browser.close()
 
 (OUT / "report.json").write_text(json.dumps(results, indent=2), encoding="utf-8")
-print(json.dumps({
+summary = {
     "screenshots": len(results),
     "overflow": [f"{r['page']}:{r['viewport']}" for r in results if r['horizontalOverflow']],
     "consoleErrors": sum(len(r['consoleErrors']) for r in results),
     "smallTargetCounts": {f"{r['page']}:{r['viewport']}": len(r['smallTargets']) for r in results if r['smallTargets']},
-}, indent=2))
+}
+print(json.dumps(summary, indent=2))
+
+if summary["overflow"] or summary["consoleErrors"] or summary["smallTargetCounts"]:
+    raise SystemExit(1)
