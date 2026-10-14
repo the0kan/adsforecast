@@ -10,7 +10,7 @@
   <a href="https://github.com/the0kan/adsforecast/actions/workflows/ci.yml"><img src="https://github.com/the0kan/adsforecast/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-8B7CF6.svg" alt="MIT license"></a>
   <a href="https://adsforecast.com"><img src="https://img.shields.io/badge/live-adsforecast.com-55DFC0.svg" alt="Live product"></a>
-  <img src="https://img.shields.io/badge/status-private_beta-FF755F.svg" alt="Private beta">
+  <img src="https://img.shields.io/badge/status-production-55DFC0.svg" alt="Production status">
 </p>
 
 <p align="center">
@@ -25,7 +25,7 @@
 AdsForecast is a profit-first operating workspace for Meta Ads. It combines campaign evidence, contribution-margin modelling, AI-assisted decisions, workspace operations, billing readiness and customer support in one tenant-aware product.
 
 > [!IMPORTANT]
-> The product is ready for private-beta operation. Public paid launch remains gated until Stripe price mappings, signed webhooks and the Customer Portal have been verified in both test and live modes.
+> AdsForecast is live at [adsforecast.com](https://adsforecast.com). Billing capabilities are enabled only after their Stripe price mappings, signed webhooks and Customer Portal flows have been verified in the target environment.
 
 ## What it does
 
