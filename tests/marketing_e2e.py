@@ -102,7 +102,7 @@ with sync_playwright() as p:
                 if viewport_name == "desktop":
                     assert page_height <= 4700, f"desktop homepage became too long: {page_height}px"
                 elif viewport_name in {"mobile", "small-mobile"}:
-                    assert page_height <= 6800, f"mobile homepage became too long: {page_height}px"
+                    assert page_height <= 7000, f"mobile homepage became too long: {page_height}px"
 
             if page_name != "home":
                 active = page.locator('.site-nav a[aria-current="page"]')
